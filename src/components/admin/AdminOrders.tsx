@@ -179,7 +179,7 @@ export const AdminOrders: React.FC = () => {
               </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+            <div className="form-grid-2" style={{ marginBottom: '16px' }}>
               <div style={{ background: '#FAF7F2', padding: '12px', borderRadius: 'var(--radius-sm)' }}>
                 <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px' }}>CUSTOMER</div>
                 <div style={{ fontWeight: 600 }}>{selectedOrder.customerName}</div>

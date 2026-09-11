@@ -97,7 +97,7 @@ const MainAppContent: React.FC = () => {
         <div className="top-bar-controls">
           {/* Viewport Frame Switcher */}
           {appMode === 'storefront' && (
-            <div style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.08)', padding: '2px', borderRadius: '6px', marginRight: '10px' }}>
+            <div className="device-toggle-group" style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.08)', padding: '2px', borderRadius: '6px', marginRight: '10px' }}>
               <button
                 className={`device-toggle-btn ${deviceView === 'mobile-mockup' ? 'active' : ''}`}
                 onClick={() => setDeviceView('mobile-mockup')}
