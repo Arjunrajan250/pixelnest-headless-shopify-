@@ -118,15 +118,14 @@ img {
 
 /* Full Responsive Viewport */
 .responsive-store-wrapper {
-  max-width: 1200px;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--bg-main);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.04);
 }
 
 /* Storefront Header */
@@ -141,6 +140,12 @@ img {
   z-index: 40;
   border-bottom: 1px solid rgba(235, 229, 220, 0.7);
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .storefront-header {
+    padding: 14px 20px;
+  }
 }
 
 .store-logo-wrapper {
@@ -251,6 +256,12 @@ img {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .hero-banner-section {
+    padding: 14px 20px;
+  }
+}
+
 .hero-banner-card {
   position: relative;
   background: #ECE5DC;
@@ -331,6 +342,13 @@ img {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .categories-chips-section {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+}
+
 .category-chip-item {
   background: #F4ECE3;
   border-radius: var(--radius-md);
@@ -375,6 +393,12 @@ img {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .section-header-row {
+    padding: 16px 20px 8px 20px;
+  }
+}
+
 .section-title {
   font-family: var(--font-serif);
   font-size: clamp(18px, 4.8vw, 22px);
@@ -408,15 +432,24 @@ img {
 @media (min-width: 768px) {
   .responsive-store-wrapper .product-grid-container {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    padding: 12px 24px 28px 24px;
+    gap: 16px;
+    padding: 10px 20px 28px 20px;
   }
 }
 
 @media (min-width: 1024px) {
   .responsive-store-wrapper .product-grid-container {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
+    gap: 16px;
+    padding: 12px 20px 32px 20px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .responsive-store-wrapper .product-grid-container {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+    padding: 14px 20px 36px 20px;
   }
 }
 
@@ -577,6 +610,13 @@ img {
   border: 1px solid #E6DED3;
 }
 
+@media (min-width: 768px) {
+  .instant-download-banner {
+    margin: 12px 20px;
+    padding: 14px 20px;
+  }
+}
+
 .instant-download-icon {
   width: 32px;
   height: 32px;
@@ -605,6 +645,12 @@ img {
   padding: 14px 16px 8px 16px;
 }
 
+@media (min-width: 768px) {
+  .categories-hero {
+    padding: 16px 20px 8px 20px;
+  }
+}
+
 .categories-hero-title {
   font-family: var(--font-serif);
   font-size: clamp(20px, 5.5vw, 24px);
@@ -623,6 +669,14 @@ img {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .category-list-grid {
+    padding: 10px 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
 }
 
 .category-large-card {
@@ -659,6 +713,12 @@ img {
   padding: 12px 16px 6px 16px;
 }
 
+@media (min-width: 768px) {
+  .collection-header-box {
+    padding: 16px 20px 8px 20px;
+  }
+}
+
 .collection-title {
   font-family: var(--font-serif);
   font-size: clamp(19px, 5vw, 23px);
@@ -678,6 +738,12 @@ img {
   gap: 6px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .filter-pills-row {
+    padding: 8px 20px;
+  }
 }
 
 .filter-pill {
@@ -1138,6 +1204,12 @@ img {
   -webkit-overflow-scrolling: touch;
 }
 
+@media (min-width: 768px) {
+  .orders-tabs-row {
+    padding: 10px 20px;
+  }
+}
+
 .orders-tab-pill {
   padding: 5px 14px;
   border-radius: var(--radius-full);
@@ -1158,6 +1230,12 @@ img {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .order-cards-list {
+    padding: 10px 20px 32px 20px;
+  }
 }
 
 .order-card-aesthetic {
@@ -1239,6 +1317,12 @@ img {
 .profile-screen {
   padding: 16px 16px 80px 16px;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .profile-screen {
+    padding: 18px 20px 40px 20px;
+  }
 }
 
 .profile-avatar-row {
@@ -1335,7 +1419,7 @@ img {
   text-align: center;
 }
 
-/* Bottom Navigation Bar - Shown while reaching bottom only */
+/* Bottom Navigation Bar - Mobile view only, shown while reaching bottom */
 .bottom-nav-bar {
   position: relative;
   margin-top: auto;
@@ -1348,6 +1432,12 @@ img {
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   z-index: 10;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .bottom-nav-bar {
+    display: none !important;
+  }
 }
 
 .bottom-nav-item {
