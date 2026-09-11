@@ -1,9 +1,9 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
-import { Search, ShoppingBag, Sparkles } from 'lucide-react';
+import { Search, ShoppingBag, Sparkles, Sliders } from 'lucide-react';
 
 export const Header: React.FC = () => {
-  const { cart, activeTab, setActiveTab, setIsCartOpen, setIsSearchOpen } = useStore();
+  const { cart, activeTab, setActiveTab, setIsCartOpen, setIsSearchOpen, setAppMode } = useStore();
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -42,6 +42,14 @@ export const Header: React.FC = () => {
           {totalCartCount > 0 && (
             <span className="cart-badge-count">{totalCartCount}</span>
           )}
+        </button>
+
+        <button 
+          className="icon-btn-pill" 
+          title="Merchant Admin Panel"
+          onClick={() => setAppMode('admin')}
+        >
+          <Sliders size={17} />
         </button>
       </div>
     </header>
