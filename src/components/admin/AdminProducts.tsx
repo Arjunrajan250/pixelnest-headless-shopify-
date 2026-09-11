@@ -16,43 +16,51 @@ export const AdminProducts: React.FC = () => {
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [category, setCategory] = useState<ProductCategory>('Peripherals');
-  const [subCategory, setSubCategory] = useState('Mice');
-  const [price, setPrice] = useState('1499');
-  const [comparePrice, setComparePrice] = useState('2499');
+  const [subCategory, setSubCategory] = useState('Keyboards');
+  const [price, setPrice] = useState('2999');
+  const [comparePrice, setComparePrice] = useState('4499');
   const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('/images/mouse.jpg');
-  const [features, setFeatures] = useState('Free 2-Day Express Shipping\n1-Year Official Warranty\nTested & Certified Build Quality\n7-Day Replacement Guarantee');
-  const [downloadFileName, setDownloadFileName] = useState('Product_Warranty_Guide.pdf');
+  const [imageUrl, setImageUrl] = useState('/images/keyboard.jpg');
+  const [features, setFeatures] = useState('Free 2-Day Express Courier Delivery\n1-Year Official Brand Replacement Warranty\nTested & Certified Factory Build Quality\n7-Day Risk-Free Replacement Guarantee');
+  const [warranty, setWarranty] = useState('1-Year Official Brand Replacement Warranty');
+  const [shippingInfo, setShippingInfo] = useState('Free Insured Express Delivery (2-4 Business Days)');
+  const [specsText, setSpecsText] = useState('Connectivity: Tri-Mode (BT 5.3 / 2.4GHz / USB-C)\nBuild: CNC Anodized Aluminum Top Plate\nBattery: 4,000mAh Rechargeable Lithium-Ion');
+  const [inStock, setInStock] = useState(true);
+  const [downloadFileName, setDownloadFileName] = useState('Hardware_User_Manual_and_Warranty.pdf');
   const [status, setStatus] = useState<'active' | 'draft'>('active');
 
   const presetImages = [
-    { label: 'Mechanical Keyboard (Main)', url: '/images/keyboard.jpg' },
-    { label: 'Mechanical Keyboard (Switches Macro)', url: '/images/keyboard_detail.jpg' },
-    { label: 'Mechanical Keyboard (Overhead Desk)', url: '/images/keyboard_overhead.jpg' },
-    { label: 'Wireless Mouse (Main)', url: '/images/mouse.jpg' },
-    { label: 'Wireless Mouse (Side Ergonomic)', url: '/images/mouse_side.jpg' },
-    { label: 'Wireless Mouse (Desk Workspace)', url: '/images/mouse_desk.jpg' },
-    { label: '4K Curved Monitor', url: '/images/monitor.jpg' },
-    { label: 'GaN Multi-Charger', url: '/images/charger.jpg' },
-    { label: 'Retro Lava Lamp', url: '/images/lava_lamp.jpg' },
-    { label: 'Magnetic Hooks', url: '/images/kitchen_hooks.jpg' },
-    { label: 'Monitor Arm', url: '/images/monitor_arm.jpg' },
-    { label: 'Screen Light Bar', url: '/images/lightbar.jpg' },
-    { label: 'Cable Organizer', url: '/images/cable_organizer.jpg' },
-    { label: 'Desk Setup Hero', url: '/images/hardware_hero.jpg' }
+    { label: 'Keyboard (Main)', category: 'Peripherals', url: '/images/keyboard.jpg' },
+    { label: 'Keyboard (Switches)', category: 'Peripherals', url: '/images/keyboard_detail.jpg' },
+    { label: 'Keyboard (Desk)', category: 'Peripherals', url: '/images/keyboard_overhead.jpg' },
+    { label: 'Mouse (Ergo)', category: 'Peripherals', url: '/images/mouse.jpg' },
+    { label: 'Mouse (Side)', category: 'Peripherals', url: '/images/mouse_side.jpg' },
+    { label: 'Mouse (Desk)', category: 'Peripherals', url: '/images/mouse_desk.jpg' },
+    { label: '4K Monitor', category: 'Displays', url: '/images/monitor.jpg' },
+    { label: 'GaN Charger', category: 'Power & Charging', url: '/images/charger.jpg' },
+    { label: 'Lava Lamp', category: 'Home & Living', url: '/images/lava_lamp.jpg' },
+    { label: 'Magnetic Hooks', category: 'Home & Living', url: '/images/kitchen_hooks.jpg' },
+    { label: 'Monitor Arm', category: 'Desk Setup', url: '/images/monitor_arm.jpg' },
+    { label: 'Light Bar', category: 'Desk Setup', url: '/images/lightbar.jpg' },
+    { label: 'Cable Tray', category: 'Desk Setup', url: '/images/cable_organizer.jpg' },
+    { label: 'Desk Setup', category: 'Desk Setup', url: '/images/hardware_hero.jpg' }
   ];
 
   const resetForm = () => {
     setTitle('');
     setSubtitle('');
     setCategory('Peripherals');
-    setSubCategory('Mice');
-    setPrice('1499');
-    setComparePrice('2499');
+    setSubCategory('Keyboards');
+    setPrice('2999');
+    setComparePrice('4499');
     setDescription('');
-    setImageUrl('/images/mouse.jpg');
-    setFeatures('Free 2-Day Express Shipping\n1-Year Official Warranty\nTested & Certified Build Quality\n7-Day Replacement Guarantee');
-    setDownloadFileName('Product_Warranty_Guide.pdf');
+    setImageUrl('/images/keyboard.jpg');
+    setFeatures('Free 2-Day Express Courier Delivery\n1-Year Official Brand Replacement Warranty\nTested & Certified Factory Build Quality\n7-Day Risk-Free Replacement Guarantee');
+    setWarranty('1-Year Official Brand Replacement Warranty');
+    setShippingInfo('Free Insured Express Delivery (2-4 Business Days)');
+    setSpecsText('Connectivity: Tri-Mode (BT 5.3 / 2.4GHz / USB-C)\nBuild: CNC Anodized Aluminum Top Plate\nBattery: 4,000mAh Rechargeable Lithium-Ion');
+    setInStock(true);
+    setDownloadFileName('Hardware_User_Manual_and_Warranty.pdf');
     setStatus('active');
     setEditingProduct(null);
   };
@@ -67,13 +75,17 @@ export const AdminProducts: React.FC = () => {
     setTitle(prod.title);
     setSubtitle(prod.subtitle || '');
     setCategory(prod.category);
-    setSubCategory(prod.subCategory || 'Daily');
+    setSubCategory(prod.subCategory || 'Keyboards');
     setPrice(prod.price.toString());
     setComparePrice(prod.compareAtPrice ? prod.compareAtPrice.toString() : '');
     setDescription(prod.description);
     setImageUrl(prod.imageUrl);
-    setFeatures(prod.features.join('\n'));
-    setDownloadFileName(prod.downloadFileName || 'Digital_Product.pdf');
+    setFeatures(prod.features ? prod.features.join('\n') : '');
+    setWarranty(prod.warranty || '1-Year Official Brand Replacement Warranty');
+    setShippingInfo(prod.shippingInfo || 'Free Insured Express Delivery (2-4 Business Days)');
+    setSpecsText(prod.specs ? Object.entries(prod.specs).map(([k, v]) => `${k}: ${v}`).join('\n') : '');
+    setInStock(prod.inStock !== false);
+    setDownloadFileName(prod.downloadFileName || `${prod.title.replace(/\s+/g, '_')}_Manual.pdf`);
     setStatus(prod.status);
     setIsAddModalOpen(true);
   };
@@ -87,7 +99,21 @@ export const AdminProducts: React.FC = () => {
       .map(f => f.trim())
       .filter(f => f.length > 0);
 
-    const parsedPrice = parseFloat(price) || 299;
+    const specEntries: Record<string, string> = {};
+    if (specsText.trim()) {
+      specsText.split('\n').forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex > 0) {
+          const k = line.substring(0, colonIndex).trim();
+          const v = line.substring(colonIndex + 1).trim();
+          if (k && v) {
+            specEntries[k] = v;
+          }
+        }
+      });
+    }
+
+    const parsedPrice = parseFloat(price) || 1499;
     const parsedCompare = comparePrice ? parseFloat(comparePrice) : undefined;
 
     if (editingProduct) {
@@ -100,12 +126,26 @@ export const AdminProducts: React.FC = () => {
         compareAtPrice: parsedCompare,
         description,
         imageUrl,
-        gallery: [imageUrl],
+        gallery: [imageUrl, ...(editingProduct.gallery ? editingProduct.gallery.filter(g => g !== imageUrl) : [])],
         features: featureList,
+        specs: Object.keys(specEntries).length > 0 ? specEntries : editingProduct.specs,
+        warranty,
+        shippingInfo,
+        inStock,
         downloadFileName,
         status
       });
     } else {
+      const categoryGallery = presetImages
+        .filter(p => p.url !== imageUrl && (
+          (category === 'Peripherals' && (p.url.includes('keyboard') || p.url.includes('mouse'))) ||
+          (category === 'Displays' && p.url.includes('monitor')) ||
+          (category === 'Power & Charging' && p.url.includes('charger')) ||
+          (category === 'Desk Setup' && (p.url.includes('lightbar') || p.url.includes('monitor_arm') || p.url.includes('cable')))
+        ))
+        .map(p => p.url)
+        .slice(0, 2);
+
       addProduct({
         title,
         handle: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
@@ -118,10 +158,14 @@ export const AdminProducts: React.FC = () => {
         reviewsCount: 1,
         description,
         imageUrl,
-        gallery: [imageUrl],
+        gallery: [imageUrl, ...categoryGallery],
         features: featureList,
+        specs: Object.keys(specEntries).length > 0 ? specEntries : undefined,
+        warranty,
+        shippingInfo,
+        inStock,
         downloadFileName,
-        fileSize: '4.5 MB',
+        fileSize: '3.5 MB (User Manual)',
         isTrending: true,
         status
       });
@@ -143,7 +187,7 @@ export const AdminProducts: React.FC = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <div>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', fontWeight: 700 }}>Product Catalog</h1>
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Add, update, or remove digital products from your store.</p>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Add, update, or remove hardware products and desk essentials from your store.</p>
         </div>
 
         <button className="btn-primary" onClick={handleOpenAdd}>
@@ -155,7 +199,7 @@ export const AdminProducts: React.FC = () => {
         <div className="table-toolbar-row">
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <input 
-              type="text"
+              type="text" 
               placeholder="Search products..."
               className="table-search-input"
               value={searchTerm}
@@ -169,11 +213,11 @@ export const AdminProducts: React.FC = () => {
               onChange={e => setSelectedCat(e.target.value)}
             >
               <option value="All">All Categories</option>
-              <option value="Planners">Planners</option>
-              <option value="Ebooks">Ebooks</option>
-              <option value="Templates">Templates</option>
-              <option value="Presets">Presets</option>
-              <option value="Courses">Courses</option>
+              <option value="Peripherals">Peripherals</option>
+              <option value="Displays">Displays</option>
+              <option value="Power & Charging">Power & Charging</option>
+              <option value="Desk Setup">Desk Setup</option>
+              <option value="Home & Living">Home & Living</option>
               <option value="Others">Others</option>
             </select>
           </div>
@@ -349,10 +393,15 @@ export const AdminProducts: React.FC = () => {
         <div className="modal-overlay" onClick={() => setIsAddModalOpen(false)}>
           <div className="modal-card" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 className="modal-title">
-                {editingProduct ? 'Edit Hardware Product' : 'Add New Hardware Product'}
-              </h2>
-              <button className="icon-btn-pill" onClick={() => setIsAddModalOpen(false)}>
+              <div>
+                <h2 className="modal-title">
+                  {editingProduct ? 'Edit Hardware Product' : 'Add New Hardware Product'}
+                </h2>
+                <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
+                  {editingProduct ? 'Update specifications, pricing, and inventory for this item.' : 'Create and publish a new hardware piece or desk accessory to your live storefront.'}
+                </p>
+              </div>
+              <button className="icon-btn-pill" onClick={() => setIsAddModalOpen(false)} aria-label="Close modal">
                 <X size={18} />
               </button>
             </div>
@@ -363,7 +412,7 @@ export const AdminProducts: React.FC = () => {
                 <input 
                   type="text" 
                   className="form-control" 
-                  placeholder="e.g. Minimal Daily Planner 2025" 
+                  placeholder="e.g. 75% Custom Mechanical Keyboard (Gasket Mount)" 
                   value={title}
                   onChange={e => setTitle(e.target.value)}
                   required
@@ -371,11 +420,11 @@ export const AdminProducts: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Subtitle / Hook</label>
+                <label className="form-label">Subtitle / Key Highlight</label>
                 <input 
                   type="text" 
                   className="form-control" 
-                  placeholder="e.g. Stay organized, focused and productive." 
+                  placeholder="e.g. Hot-swappable tactile switches with sound-dampening acoustic foams & warm RGB" 
                   value={subtitle}
                   onChange={e => setSubtitle(e.target.value)}
                 />
@@ -387,13 +436,21 @@ export const AdminProducts: React.FC = () => {
                   <select 
                     className="form-control"
                     value={category}
-                    onChange={e => setCategory(e.target.value as ProductCategory)}
+                    onChange={e => {
+                      const newCat = e.target.value as ProductCategory;
+                      setCategory(newCat);
+                      if (newCat === 'Peripherals') setSubCategory('Keyboards');
+                      else if (newCat === 'Displays') setSubCategory('Monitors');
+                      else if (newCat === 'Power & Charging') setSubCategory('GaN Chargers');
+                      else if (newCat === 'Desk Setup') setSubCategory('Lighting');
+                      else if (newCat === 'Home & Living') setSubCategory('Hooks & Storage');
+                    }}
                   >
                     <option value="Peripherals">Peripherals</option>
                     <option value="Displays">Displays</option>
                     <option value="Power & Charging">Power & Charging</option>
-                    <option value="Home & Living">Home & Living</option>
                     <option value="Desk Setup">Desk Setup</option>
+                    <option value="Home & Living">Home & Living</option>
                     <option value="Others">Others</option>
                   </select>
                 </div>
@@ -403,7 +460,7 @@ export const AdminProducts: React.FC = () => {
                   <input 
                     type="text" 
                     className="form-control" 
-                    placeholder="e.g. Daily / Weekly" 
+                    placeholder="e.g. Keyboards, Mice, Monitors, GaN Chargers" 
                     value={subCategory}
                     onChange={e => setSubCategory(e.target.value)}
                   />
@@ -418,97 +475,169 @@ export const AdminProducts: React.FC = () => {
                     className="form-control" 
                     value={price}
                     onChange={e => setPrice(e.target.value)}
+                    placeholder="e.g. 2999"
                     required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Compare-at Price (₹)</label>
+                  <label className="form-label">Compare-at Price / Original MRP (₹)</label>
                   <input 
                     type="number" 
                     className="form-control" 
-                    placeholder="e.g. 499 (for discount badge)" 
+                    placeholder="e.g. 4499 (shows discount badge)" 
                     value={comparePrice}
                     onChange={e => setComparePrice(e.target.value)}
                   />
                 </div>
               </div>
 
+              {/* Cover Image & Presets */}
               <div className="form-group">
-                <label className="form-label">Cover Image</label>
-                <input 
-                  type="text" 
-                  className="form-control" 
-                  value={imageUrl}
-                  onChange={e => setImageUrl(e.target.value)}
-                  placeholder="Image URL or pick preset below"
-                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
+                  <label className="form-label" style={{ margin: 0 }}>Cover Image *</label>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Preview updates automatically</span>
+                </div>
                 
-                <div style={{ marginTop: '8px' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '4px' }}>
-                    Or pick aesthetic preset cover:
+                <div className="admin-cover-picker-layout">
+                  <div className="admin-active-cover-preview">
+                    <img 
+                      src={imageUrl} 
+                      alt="Active cover preview" 
+                      className="admin-active-cover-img"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/keyboard.jpg';
+                      }}
+                    />
+                    <div className="admin-active-cover-tag">Active Cover</div>
                   </div>
-                  <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px' }}>
-                    {presetImages.map(preset => (
-                      <div 
-                        key={preset.url}
-                        style={{
-                          border: imageUrl === preset.url ? '2px solid var(--color-primary)' : '1px solid var(--border-light)',
-                          borderRadius: '6px',
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                          padding: '2px',
-                          background: '#FFFFFF',
-                          flexShrink: 0
-                        }}
-                        onClick={() => setImageUrl(preset.url)}
-                      >
-                        <img src={preset.url} alt={preset.label} style={{ width: '48px', height: '48px', objectFit: 'cover' }} />
-                        <div style={{ fontSize: '9px', textAlign: 'center', maxWidth: '48px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {preset.label}
-                        </div>
+
+                  <div className="admin-cover-controls">
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      value={imageUrl}
+                      onChange={e => setImageUrl(e.target.value)}
+                      placeholder="Image URL or pick a hardware preset below"
+                      required
+                    />
+
+                    <div>
+                      <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
+                        Curated Hardware Preset Covers:
                       </div>
-                    ))}
+                      <div className="admin-preset-grid">
+                        {presetImages.map(preset => {
+                          const isSelected = imageUrl === preset.url;
+                          return (
+                            <button
+                              key={preset.url}
+                              type="button"
+                              className={`admin-preset-card ${isSelected ? 'active' : ''}`}
+                              onClick={() => setImageUrl(preset.url)}
+                              title={`${preset.label} (${preset.category})`}
+                            >
+                              <img src={preset.url} alt={preset.label} className="admin-preset-thumb" />
+                              <span className="admin-preset-name">{preset.label}</span>
+                              {isSelected && (
+                                <span className="admin-preset-badge">
+                                  <Check size={10} strokeWidth={3} />
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="form-label">Description</label>
+                <label className="form-label">Product Description</label>
                 <textarea 
                   className="form-control" 
                   rows={3}
                   value={description}
                   onChange={e => setDescription(e.target.value)}
-                  placeholder="Tell buyers why this digital product is essential..."
-                />
-              </div>
-
-              <div className="form-group">
-                <label className="form-label">Key Features (One per line)</label>
-                <textarea 
-                  className="form-control" 
-                  rows={3}
-                  value={features}
-                  onChange={e => setFeatures(e.target.value)}
-                  placeholder="Instant Download (PDF)&#10;Printable & Digital Use&#10;GoodNotes Compatible"
+                  placeholder="Describe build quality, materials (e.g. CNC aluminum chassis, PBT keycaps), ergonomic comfort, connectivity options, and desk setup synergy..."
                 />
               </div>
 
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label className="form-label">Download File Name</label>
+                  <label className="form-label">Key Features (One per line)</label>
+                  <textarea 
+                    className="form-control" 
+                    rows={3}
+                    value={features}
+                    onChange={e => setFeatures(e.target.value)}
+                    placeholder="Tri-Mode Wireless (Bluetooth 5.3 + 2.4GHz + USB-C)&#10;Hot-Swappable 5-Pin Switch Sockets&#10;Precision CNC Anodized Aluminum Enclosure&#10;Factory Pre-Lubed Mechanical Switches"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Technical Specs (Key: Value per line)</label>
+                  <textarea 
+                    className="form-control" 
+                    rows={3}
+                    value={specsText}
+                    onChange={e => setSpecsText(e.target.value)}
+                    placeholder="Connectivity: Tri-Mode (BT / 2.4G / Type-C)&#10;Battery Life: 70 Hours (RGB Off)&#10;Build Material: CNC Aluminum & PBT"
+                  />
+                </div>
+              </div>
+
+              <div className="form-grid-2">
+                <div className="form-group">
+                  <label className="form-label">Warranty Period</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    value={warranty}
+                    onChange={e => setWarranty(e.target.value)}
+                    placeholder="e.g. 1-Year Official Brand Replacement Warranty"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Shipping & Delivery Info</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    value={shippingInfo}
+                    onChange={e => setShippingInfo(e.target.value)}
+                    placeholder="e.g. Free Insured Courier Delivery (2-4 Business Days)"
+                  />
+                </div>
+              </div>
+
+              <div className="form-grid-3">
+                <div className="form-group">
+                  <label className="form-label">User Manual & Warranty Slip (PDF)</label>
                   <input 
                     type="text" 
                     className="form-control" 
                     value={downloadFileName}
                     onChange={e => setDownloadFileName(e.target.value)}
-                    placeholder="Product_Bundle.pdf"
+                    placeholder="e.g. Keyboard_User_Manual.pdf"
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Status</label>
+                  <label className="form-label">Inventory Status</label>
+                  <select 
+                    className="form-control"
+                    value={inStock ? 'in-stock' : 'out-of-stock'}
+                    onChange={e => setInStock(e.target.value === 'in-stock')}
+                  >
+                    <option value="in-stock">In Stock (Ready to Ship)</option>
+                    <option value="out-of-stock">Out of Stock</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Storefront Visibility</label>
                   <select 
                     className="form-control"
                     value={status}
