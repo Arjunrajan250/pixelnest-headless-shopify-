@@ -4387,7 +4387,7 @@ img {
 
 /* Desktop Table Scroll Wrapper */
 .admin-table-scroll-wrapper {
-  display: none;
+  display: none !important;
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -4395,13 +4395,14 @@ img {
 
 @media (min-width: 768px) {
   .admin-table-scroll-wrapper {
-    display: block;
+    display: block !important;
   }
 }
 
-/* Mobile Orders Cards List (< 768px) */
-.admin-mobile-orders-cards {
-  display: flex;
+/* Mobile Orders & Products Cards List (< 768px) */
+.admin-mobile-orders-cards,
+.admin-mobile-products-cards {
+  display: flex !important;
   flex-direction: column;
   gap: 10px;
   padding: 12px;
@@ -4409,8 +4410,9 @@ img {
 }
 
 @media (min-width: 768px) {
-  .admin-mobile-orders-cards {
-    display: none;
+  .admin-mobile-orders-cards,
+  .admin-mobile-products-cards {
+    display: none !important;
   }
 }
 
@@ -4585,6 +4587,85 @@ img {
 
 .btn-quick-view-mobile:active {
   background: #4A423B;
+}
+
+/* Mobile Product Card Styles (< 768px) */
+.mobile-product-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 4px rgba(36, 32, 29, 0.03);
+}
+
+.mobile-product-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-product-thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.mobile-product-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-product-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-product-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.mobile-product-card-mid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-light);
+}
+
+.mobile-product-price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.mobile-product-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.mobile-product-compare {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.mobile-product-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .admin-data-table {

@@ -89,7 +89,8 @@ export const AdminOrders: React.FC = () => {
           </div>
         </div>
 
-        <div className="admin-table-scroll-wrapper" style={{ display: 'block' }}>
+        {/* Desktop Table View (>= 768px) */}
+        <div className="admin-table-scroll-wrapper">
           <table className="admin-data-table">
             <thead>
               <tr>
@@ -103,40 +104,86 @@ export const AdminOrders: React.FC = () => {
                 <th style={{ textAlign: 'right' }}>Actions</th>
               </tr>
             </thead>
-          <tbody>
-            {filteredOrders.map(order => (
-              <tr key={order.id}>
-                <td style={{ fontWeight: 700 }}>#{order.orderNumber}</td>
-                <td>
-                  <div>{order.customerName}</div>
-                  <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{order.customerEmail}</div>
-                </td>
-                <td>
-                  <div style={{ maxWidth: '240px' }}>
-                    {order.items.map((it, i) => (
-                      <div key={i} style={{ fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        • {it.product.title} (x{it.quantity})
-                      </div>
-                    ))}
-                  </div>
-                </td>
-                <td style={{ fontWeight: 700 }}>
-                  <div>₹{order.total}</div>
-                  {order.discount > 0 && (
-                    <div style={{ fontSize: '10px', color: '#2F7A4C' }}>
-                      -{order.discount} ({order.discountCode || 'Promo'})
+            <tbody>
+              {filteredOrders.map(order => (
+                <tr key={order.id}>
+                  <td style={{ fontWeight: 700 }}>#{order.orderNumber}</td>
+                  <td>
+                    <div>{order.customerName}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{order.customerEmail}</div>
+                  </td>
+                  <td>
+                    <div style={{ maxWidth: '240px' }}>
+                      {order.items.map((it, i) => (
+                        <div key={i} style={{ fontSize: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          • {it.product.title} (x{it.quantity})
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </td>
-                <td>
-                  <span style={{ textTransform: 'uppercase', fontSize: '11px', fontWeight: 600, background: '#ECE7E0', padding: '3px 8px', borderRadius: '4px' }}>
-                    {order.paymentMethod}
-                  </span>
-                </td>
-                <td>
+                  </td>
+                  <td style={{ fontWeight: 700 }}>
+                    <div>₹{order.total}</div>
+                    {order.discount > 0 && (
+                      <div style={{ fontSize: '10px', color: '#2F7A4C' }}>
+                        -{order.discount} ({order.discountCode || 'Promo'})
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    <span style={{ textTransform: 'uppercase', fontSize: '11px', fontWeight: 600, background: '#ECE7E0', padding: '3px 8px', borderRadius: '4px' }}>
+                      {order.paymentMethod}
+                    </span>
+                  </td>
+                  <td>
+                    <select
+                      className="form-control"
+                      style={{ padding: '4px 8px', fontSize: '12px', width: 'auto' }}
+                      value={order.status}
+                      onChange={e => handleStatusChange(order.id, e.target.value as OrderStatus)}
+                    >
+                      <option value="Completed">Completed</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </td>
+                  <td style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                    {new Date(order.date).toLocaleDateString()}
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <button 
+                      className="icon-btn-pill" 
+                      style={{ width: '32px', height: '32px' }}
+                      title="View Full Order Details"
+                      onClick={() => setSelectedOrder(order)}
+                    >
+                      <Eye size={14} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Order Cards View (< 768px) */}
+        <div className="admin-mobile-orders-cards">
+          {filteredOrders.length === 0 ? (
+            <div className="mobile-orders-empty">
+              No orders match your filter criteria.
+            </div>
+          ) : (
+            filteredOrders.map(order => (
+              <div key={order.id} className="mobile-order-card">
+                <div className="mobile-order-card-top">
+                  <div className="mobile-order-id-block">
+                    <span className="order-id-badge">#{order.orderNumber}</span>
+                    <span className="mobile-order-date">
+                      {new Date(order.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                    </span>
+                  </div>
                   <select
                     className="form-control"
-                    style={{ padding: '4px 8px', fontSize: '12px', width: 'auto' }}
+                    style={{ padding: '4px 8px', fontSize: '11px', width: 'auto', borderRadius: 'var(--radius-full)' }}
                     value={order.status}
                     onChange={e => handleStatusChange(order.id, e.target.value as OrderStatus)}
                   >
@@ -144,24 +191,46 @@ export const AdminOrders: React.FC = () => {
                     <option value="Processing">Processing</option>
                     <option value="Cancelled">Cancelled</option>
                   </select>
-                </td>
-                <td style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                  {new Date(order.date).toLocaleDateString()}
-                </td>
-                <td style={{ textAlign: 'right' }}>
+                </div>
+
+                <div className="mobile-order-customer-row">
+                  <div className="customer-avatar-circle">
+                    {order.customerName.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                  </div>
+                  <div className="mobile-customer-info">
+                    <strong className="mobile-customer-name">{order.customerName}</strong>
+                    <span className="mobile-customer-email">{order.customerEmail}</span>
+                  </div>
+                  <span className="payment-chip-pill">{order.paymentMethod.toUpperCase()}</span>
+                </div>
+
+                <div className="mobile-order-items-preview">
+                  {order.items.map((it, idx) => (
+                    <div key={idx} className="mobile-item-chip">
+                      <img src={it.product.imageUrl} alt={it.product.title} />
+                      <span>{it.product.title} (x{it.quantity})</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mobile-order-card-bottom">
+                  <div>
+                    <div className="mobile-order-price">₹{order.total.toLocaleString()}</div>
+                    {order.discount > 0 && (
+                      <span className="order-discount-pill">₹{order.discount} off</span>
+                    )}
+                  </div>
                   <button 
-                    className="icon-btn-pill"
-                    style={{ width: '32px', height: '32px' }}
-                    title="View Full Order Details"
+                    className="btn-quick-view-mobile"
                     onClick={() => setSelectedOrder(order)}
                   >
-                    <Eye size={14} />
+                    <Eye size={13} />
+                    <span>View Details</span>
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

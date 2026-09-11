@@ -183,7 +183,8 @@ export const AdminProducts: React.FC = () => {
           </div>
         </div>
 
-        <div className="admin-table-scroll-wrapper" style={{ display: 'block' }}>
+        {/* Desktop Table View (>= 768px) */}
+        <div className="admin-table-scroll-wrapper">
           <table className="admin-data-table">
             <thead>
               <tr>
@@ -271,6 +272,75 @@ export const AdminProducts: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Product Cards View (< 768px) */}
+        <div className="admin-mobile-products-cards">
+          {filteredProducts.length === 0 ? (
+            <div className="mobile-orders-empty">
+              No products found matching your search.
+            </div>
+          ) : (
+            filteredProducts.map(prod => (
+              <div key={prod.id} className="mobile-product-card">
+                <div className="mobile-product-card-top">
+                  <img src={prod.imageUrl} alt={prod.title} className="mobile-product-thumb" />
+                  <div className="mobile-product-meta">
+                    <div className="mobile-product-title">{prod.title}</div>
+                    <div className="mobile-product-sub">
+                      <span>{prod.category}</span> • <span>★ {prod.rating}</span>
+                    </div>
+                  </div>
+                  <span className={`status-badge ${prod.status}`}>
+                    {prod.status === 'active' ? 'Active' : 'Draft'}
+                  </span>
+                </div>
+
+                <div className="mobile-product-card-mid">
+                  <div className="mobile-product-price-block">
+                    <span className="mobile-product-price">₹{prod.price}</span>
+                    {prod.compareAtPrice && (
+                      <span className="mobile-product-compare">₹{prod.compareAtPrice}</span>
+                    )}
+                  </div>
+                  <div className="mobile-product-actions">
+                    <button 
+                      className="icon-btn-pill" 
+                      style={{ width: '32px', height: '32px' }}
+                      title="Preview in Storefront"
+                      onClick={() => {
+                        setSelectedProduct(prod);
+                        setAppMode('storefront');
+                        setActiveTab('product-detail');
+                      }}
+                    >
+                      <ExternalLink size={14} />
+                    </button>
+                    <button 
+                      className="icon-btn-pill" 
+                      style={{ width: '32px', height: '32px' }}
+                      title="Edit Product"
+                      onClick={() => handleOpenEdit(prod)}
+                    >
+                      <Edit2 size={14} />
+                    </button>
+                    <button 
+                      className="icon-btn-pill" 
+                      style={{ width: '32px', height: '32px', color: '#B42318' }}
+                      title="Delete Product"
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete "${prod.title}"?`)) {
+                          deleteProduct(prod.id);
+                        }
+                      }}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
