@@ -178,93 +178,95 @@ export const AdminProducts: React.FC = () => {
           </div>
         </div>
 
-        <table className="admin-data-table">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Compare</th>
-              <th>Status</th>
-              <th>Rating</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map(prod => (
-              <tr key={prod.id}>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <img 
-                      src={prod.imageUrl} 
-                      alt={prod.title} 
-                      style={{ width: '44px', height: '44px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border-light)' }} 
-                    />
-                    <div>
-                      <div style={{ fontWeight: 600 }}>{prod.title}</div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
-                        {prod.downloadFileName || 'Digital Asset (PDF/ZIP)'}
+        <div className="admin-table-scroll-wrapper" style={{ display: 'block' }}>
+          <table className="admin-data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Compare</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProducts.map(prod => (
+                <tr key={prod.id}>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <img 
+                        src={prod.imageUrl} 
+                        alt={prod.title} 
+                        style={{ width: '44px', height: '44px', objectFit: 'cover', borderRadius: '8px', border: '1px solid var(--border-light)' }} 
+                      />
+                      <div>
+                        <div style={{ fontWeight: 600 }}>{prod.title}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+                          {prod.subCategory || 'Hardware Tech'} • 1-Yr Warranty
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  <span style={{ fontSize: '12px', background: '#F1ECE4', padding: '3px 8px', borderRadius: '4px', fontWeight: 500 }}>
-                    {prod.category}
-                  </span>
-                </td>
-                <td style={{ fontWeight: 700 }}>₹{prod.price}</td>
-                <td style={{ color: 'var(--text-muted)' }}>
-                  {prod.compareAtPrice ? `₹${prod.compareAtPrice}` : '—'}
-                </td>
-                <td>
-                  <span className={`status-badge ${prod.status}`}>
-                    {prod.status === 'active' ? 'Active' : 'Draft'}
-                  </span>
-                </td>
-                <td style={{ fontSize: '12px' }}>
-                  ★ {prod.rating} ({prod.reviewsCount})
-                </td>
-                <td style={{ textAlign: 'right' }}>
-                  <div style={{ display: 'inline-flex', gap: '6px' }}>
-                    <button 
-                      className="icon-btn-pill" 
-                      style={{ width: '32px', height: '32px' }}
-                      title="Preview in Storefront"
-                      onClick={() => {
-                        setSelectedProduct(prod);
-                        setAppMode('storefront');
-                        setActiveTab('product-detail');
-                      }}
-                    >
-                      <ExternalLink size={14} />
-                    </button>
-                    <button 
-                      className="icon-btn-pill" 
-                      style={{ width: '32px', height: '32px' }}
-                      title="Edit Product"
-                      onClick={() => handleOpenEdit(prod)}
-                    >
-                      <Edit2 size={14} />
-                    </button>
-                    <button 
-                      className="icon-btn-pill" 
-                      style={{ width: '32px', height: '32px', color: '#B42318' }}
-                      title="Delete Product"
-                      onClick={() => {
-                        if (confirm(`Are you sure you want to delete "${prod.title}"?`)) {
-                          deleteProduct(prod.id);
-                        }
-                      }}
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                  <td>
+                    <span style={{ fontSize: '12px', background: '#F1ECE4', padding: '3px 8px', borderRadius: '4px', fontWeight: 500 }}>
+                      {prod.category}
+                    </span>
+                  </td>
+                  <td style={{ fontWeight: 700 }}>₹{prod.price}</td>
+                  <td style={{ color: 'var(--text-muted)' }}>
+                    {prod.compareAtPrice ? `₹${prod.compareAtPrice}` : '—'}
+                  </td>
+                  <td>
+                    <span className={`status-badge ${prod.status}`}>
+                      {prod.status === 'active' ? 'Active' : 'Draft'}
+                    </span>
+                  </td>
+                  <td style={{ fontSize: '12px' }}>
+                    ★ {prod.rating} ({prod.reviewsCount})
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <div style={{ display: 'inline-flex', gap: '6px' }}>
+                      <button 
+                        className="icon-btn-pill" 
+                        style={{ width: '32px', height: '32px' }}
+                        title="Preview in Storefront"
+                        onClick={() => {
+                          setSelectedProduct(prod);
+                          setAppMode('storefront');
+                          setActiveTab('product-detail');
+                        }}
+                      >
+                        <ExternalLink size={14} />
+                      </button>
+                      <button 
+                        className="icon-btn-pill" 
+                        style={{ width: '32px', height: '32px' }}
+                        title="Edit Product"
+                        onClick={() => handleOpenEdit(prod)}
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                      <button 
+                        className="icon-btn-pill" 
+                        style={{ width: '32px', height: '32px', color: '#B42318' }}
+                        title="Delete Product"
+                        onClick={() => {
+                          if (confirm(`Are you sure you want to delete "${prod.title}"?`)) {
+                            deleteProduct(prod.id);
+                          }
+                        }}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Add / Edit Product Modal */}
@@ -273,7 +275,7 @@ export const AdminProducts: React.FC = () => {
           <div className="modal-card" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2 className="modal-title">
-                {editingProduct ? 'Edit Product' : 'Add New Digital Product'}
+                {editingProduct ? 'Edit Hardware Product' : 'Add New Hardware Product'}
               </h2>
               <button className="icon-btn-pill" onClick={() => setIsAddModalOpen(false)}>
                 <X size={18} />

@@ -7,32 +7,46 @@ import {
   Settings, 
   Store, 
   Sparkles,
-  ExternalLink
+  ArrowRight
 } from 'lucide-react';
 import { AdminTab } from '../../types';
 
 export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { adminTab, setAdminTab, setAppMode, shopifyConfig } = useStore();
 
-  const tabs = [
-    { id: 'overview' as AdminTab, label: 'Dashboard', icon: BarChart3 },
-    { id: 'products' as AdminTab, label: 'Products', icon: Package },
-    { id: 'orders' as AdminTab, label: 'Orders & Tracking', icon: ShoppingBag },
-    { id: 'shopify-settings' as AdminTab, label: 'Shopify Settings', icon: Settings }
+  const tabs: Array<{ id: AdminTab; label: string; shortLabel: string; icon: React.ComponentType<{ size: number }> }> = [
+    { id: 'overview', label: 'Dashboard', shortLabel: 'Dashboard', icon: BarChart3 },
+    { id: 'products', label: 'Products', shortLabel: 'Products', icon: Package },
+    { id: 'orders', label: 'Orders & Tracking', shortLabel: 'Orders', icon: ShoppingBag },
+    { id: 'shopify-settings', label: 'Shopify Settings', shortLabel: 'Settings', icon: Settings }
   ];
 
   return (
     <div className="admin-shell">
       <header className="admin-header">
-        <div className="admin-header-title">
-          <Sparkles size={22} style={{ color: '#82A189' }} />
-          <span>PixelNest Admin</span>
-          <span style={{ fontSize: '11px', background: 'rgba(255,255,255,0.15)', padding: '2px 8px', borderRadius: '12px', fontWeight: 500 }}>
-            {shopifyConfig.liveMode ? '🟢 Shopify Live' : '⚪ Headless Demo Store'}
-          </span>
+        <div className="admin-header-top-row">
+          <div className="admin-header-title">
+            <Sparkles size={20} style={{ color: '#82A189', flexShrink: 0 }} />
+            <span className="admin-brand-name">PixelNest Admin</span>
+            <span className="admin-live-badge">
+              <span className={`admin-badge-dot ${shopifyConfig.liveMode ? 'live' : 'demo'}`} />
+              <span className="admin-badge-text">
+                {shopifyConfig.liveMode ? 'Shopify Live' : 'Demo Store'}
+              </span>
+            </span>
+          </div>
+
+          <button 
+            className="admin-view-storefront-btn"
+            onClick={() => setAppMode('storefront')}
+            title="Return to customer store"
+          >
+            <Store size={14} />
+            <span className="storefront-btn-text">View Store</span>
+          </button>
         </div>
 
-        <nav className="admin-nav-tabs">
+        <nav className="admin-nav-tabs" aria-label="Admin navigation">
           {tabs.map(tab => {
             const Icon = tab.icon;
             const isActive = adminTab === tab.id;
@@ -42,21 +56,13 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
                 className={`admin-nav-tab-btn ${isActive ? 'active' : ''}`}
                 onClick={() => setAdminTab(tab.id)}
               >
-                <Icon size={15} />
-                <span>{tab.label}</span>
+                <Icon size={14} />
+                <span className="tab-label-full">{tab.label}</span>
+                <span className="tab-label-short">{tab.shortLabel}</span>
               </button>
             );
           })}
         </nav>
-
-        <button 
-          className="mode-toggle-btn active"
-          onClick={() => setAppMode('storefront')}
-          title="Return to customer store"
-        >
-          <Store size={14} />
-          <span>View Storefront</span>
-        </button>
       </header>
 
       <main className="admin-body">

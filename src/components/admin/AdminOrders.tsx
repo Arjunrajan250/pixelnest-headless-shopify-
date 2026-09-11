@@ -37,7 +37,7 @@ export const AdminOrders: React.FC = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <div>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '24px', fontWeight: 700 }}>Order Tracking & Fulfillment</h1>
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Track customer orders, delivery states, and digital asset fulfillment.</p>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Track customer orders, courier dispatch states, and warranty slips.</p>
         </div>
       </div>
 
@@ -89,19 +89,20 @@ export const AdminOrders: React.FC = () => {
           </div>
         </div>
 
-        <table className="admin-data-table">
-          <thead>
-            <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Items & Digital Assets</th>
-              <th>Total</th>
-              <th>Payment</th>
-              <th>Status Action</th>
-              <th>Date</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
+        <div className="admin-table-scroll-wrapper" style={{ display: 'block' }}>
+          <table className="admin-data-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Hardware Items</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status Action</th>
+                <th>Date</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
           <tbody>
             {filteredOrders.map(order => (
               <tr key={order.id}>
@@ -161,6 +162,7 @@ export const AdminOrders: React.FC = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Order Details Modal */}

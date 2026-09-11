@@ -17,7 +17,8 @@ import {
   X, 
   Sparkles,
   Layers,
-  ArrowRight
+  ArrowRight,
+  ChevronRight
 } from 'lucide-react';
 import { Order } from '../../types';
 
@@ -127,12 +128,12 @@ export const AdminOverview: React.FC = () => {
 
       {/* Header Section with Live Status & Controls */}
       <div className="admin-header-row">
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div className="admin-header-title-block">
+          <div className="admin-title-badge-wrap">
             <h1 className="admin-main-title">Merchant Overview</h1>
             <span className="live-store-pulse-badge">
               <span className="pulse-dot"></span>
-              {shopifyConfig.liveMode ? 'Shopify Live API' : 'Headless Storefront Active'}
+              <span>{shopifyConfig.liveMode ? 'Shopify Live API' : 'Storefront Active'}</span>
             </span>
           </div>
           <p className="admin-subtitle">
@@ -146,7 +147,7 @@ export const AdminOverview: React.FC = () => {
               className={`time-pill ${timeRange === '7d' ? 'active' : ''}`}
               onClick={() => setTimeRange('7d')}
             >
-              Last 7 Days
+              7 Days
             </button>
             <button 
               className={`time-pill ${timeRange === '30d' ? 'active' : ''}`}
@@ -158,36 +159,38 @@ export const AdminOverview: React.FC = () => {
               className={`time-pill ${timeRange === 'quarter' ? 'active' : ''}`}
               onClick={() => setTimeRange('quarter')}
             >
-              This Quarter
+              Quarter
             </button>
           </div>
 
-          <button 
-            className="btn-admin-secondary"
-            onClick={handleExportCSV}
-            title="Export orders as CSV"
-          >
-            <Download size={14} />
-            <span>Export CSV</span>
-          </button>
+          <div className="admin-action-buttons-strip">
+            <button 
+              className="btn-admin-secondary"
+              onClick={handleExportCSV}
+              title="Export orders as CSV"
+            >
+              <Download size={14} />
+              <span className="btn-label-desktop">Export CSV</span>
+            </button>
 
-          <button 
-            className="btn-admin-secondary"
-            onClick={handleSync}
-            disabled={isSyncing}
-            title="Sync products with Shopify"
-          >
-            <RefreshCw size={14} className={isSyncing ? 'animate-spin' : ''} />
-            <span>{isSyncing ? 'Syncing...' : 'Sync Catalog'}</span>
-          </button>
+            <button 
+              className="btn-admin-secondary"
+              onClick={handleSync}
+              disabled={isSyncing}
+              title="Sync products with Shopify"
+            >
+              <RefreshCw size={14} className={isSyncing ? 'animate-spin' : ''} />
+              <span className="btn-label-desktop">{isSyncing ? 'Syncing...' : 'Sync'}</span>
+            </button>
 
-          <button 
-            className="btn-admin-primary"
-            onClick={() => setAdminTab('products')}
-          >
-            <Plus size={15} />
-            <span>Add Product</span>
-          </button>
+            <button 
+              className="btn-admin-primary"
+              onClick={() => setAdminTab('products')}
+            >
+              <Plus size={15} />
+              <span>Add Product</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -426,105 +429,190 @@ export const AdminOverview: React.FC = () => {
           </div>
         </div>
 
-        <table className="admin-data-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Hardware Items</th>
-              <th>Amount</th>
-              <th>Payment</th>
-              <th>Courier & Tracking</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.length === 0 ? (
+        {/* Desktop Table View (>= 768px) */}
+        <div className="admin-table-scroll-wrapper">
+          <table className="admin-data-table">
+            <thead>
               <tr>
-                <td colSpan={9} style={{ textAlign: 'center', padding: '36px', color: 'var(--text-secondary)' }}>
-                  No orders match your filter criteria.
-                </td>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Hardware Items</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Courier & Tracking</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
               </tr>
-            ) : (
-              filteredOrders.map(order => {
-                const courierInfo = getCourierDisplay(order.deliveryDate);
-                const initials = order.customerName.split(' ').map(n => n[0]).join('').slice(0, 2);
-                return (
-                  <tr key={order.id} className="admin-table-row">
-                    <td>
-                      <span className="order-id-badge">#{order.orderNumber}</span>
-                    </td>
-                    <td>
-                      <div className="customer-cell">
-                        <div className="customer-avatar-circle">{initials}</div>
-                        <div>
-                          <div className="customer-name-text">{order.customerName}</div>
-                          <div className="customer-email-text">{order.customerEmail}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="order-items-cell">
-                        {order.items.slice(0, 2).map((it, idx) => (
-                          <div key={idx} className="item-thumb-title">
-                            <img 
-                              src={it.product.imageUrl} 
-                              alt={it.product.title} 
-                              className="order-mini-thumb" 
-                            />
-                            <span className="order-item-name">{it.product.title}</span>
+            </thead>
+            <tbody>
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '36px', color: 'var(--text-secondary)' }}>
+                    No orders match your filter criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredOrders.map(order => {
+                  const courierInfo = getCourierDisplay(order.deliveryDate);
+                  const initials = order.customerName.split(' ').map(n => n[0]).join('').slice(0, 2);
+                  return (
+                    <tr key={order.id} className="admin-table-row">
+                      <td>
+                        <span className="order-id-badge">#{order.orderNumber}</span>
+                      </td>
+                      <td>
+                        <div className="customer-cell">
+                          <div className="customer-avatar-circle">{initials}</div>
+                          <div>
+                            <div className="customer-name-text">{order.customerName}</div>
+                            <div className="customer-email-text">{order.customerEmail}</div>
                           </div>
-                        ))}
-                        {order.items.length > 2 && (
-                          <span className="more-items-tag">+{order.items.length - 2} more</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="order-items-cell">
+                          {order.items.slice(0, 2).map((it, idx) => (
+                            <div key={idx} className="item-thumb-title">
+                              <img 
+                                src={it.product.imageUrl} 
+                                alt={it.product.title} 
+                                className="order-mini-thumb" 
+                              />
+                              <span className="order-item-name">{it.product.title}</span>
+                            </div>
+                          ))}
+                          {order.items.length > 2 && (
+                            <span className="more-items-tag">+{order.items.length - 2} more</span>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="order-total-val">₹{order.total.toLocaleString()}</div>
+                        {order.discount > 0 && (
+                          <span className="order-discount-pill">₹{order.discount} off</span>
                         )}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="order-total-val">₹{order.total.toLocaleString()}</div>
-                      {order.discount > 0 && (
-                        <span className="order-discount-pill">₹{order.discount} off</span>
+                      </td>
+                      <td>
+                        <span className="payment-chip-pill">
+                          {order.paymentMethod.toUpperCase()}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="courier-pill">
+                          <Truck size={12} color="#4A5B4F" />
+                          <span style={{ fontWeight: 600 }}>{courierInfo.courier}</span>
+                          <span className="tracking-id-text">{courierInfo.code}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className={`status-pill-modern ${order.status.toLowerCase()}`}>
+                          <span className="status-dot"></span>
+                          {order.status}
+                        </span>
+                      </td>
+                      <td style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+                        {new Date(order.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        <button 
+                          className="btn-quick-view"
+                          onClick={() => setSelectedOrder(order)}
+                          title="View Order Details"
+                        >
+                          <Eye size={13} />
+                          <span>Quick View</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Mobile Order Cards View (< 768px) */}
+        <div className="admin-mobile-orders-cards">
+          {filteredOrders.length === 0 ? (
+            <div className="mobile-orders-empty">
+              No orders match your filter criteria.
+            </div>
+          ) : (
+            filteredOrders.map(order => {
+              const courierInfo = getCourierDisplay(order.deliveryDate);
+              const initials = order.customerName.split(' ').map(n => n[0]).join('').slice(0, 2);
+              return (
+                <div 
+                  key={order.id} 
+                  className="mobile-order-card"
+                  onClick={() => setSelectedOrder(order)}
+                >
+                  <div className="mobile-order-card-top">
+                    <div className="mobile-order-id-block">
+                      <span className="order-id-badge">#{order.orderNumber}</span>
+                      <span className="mobile-order-date">
+                        {new Date(order.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                      </span>
+                    </div>
+                    <span className={`status-pill-modern ${order.status.toLowerCase()}`}>
+                      <span className="status-dot"></span>
+                      {order.status}
+                    </span>
+                  </div>
+
+                  <div className="mobile-order-customer-row">
+                    <div className="customer-avatar-circle">{initials}</div>
+                    <div className="mobile-customer-info">
+                      <strong className="mobile-customer-name">{order.customerName}</strong>
+                      <span className="mobile-customer-email">{order.customerEmail}</span>
+                    </div>
+                    <span className="payment-chip-pill">{order.paymentMethod.toUpperCase()}</span>
+                  </div>
+
+                  <div className="mobile-order-items-row">
+                    <div className="mobile-item-thumbs">
+                      {order.items.slice(0, 3).map((it, idx) => (
+                        <img 
+                          key={idx} 
+                          src={it.product.imageUrl} 
+                          alt={it.product.title} 
+                          className="mobile-item-mini-img"
+                        />
+                      ))}
+                      {order.items.length > 3 && (
+                        <span className="mobile-more-items">+{order.items.length - 3}</span>
                       )}
-                    </td>
-                    <td>
-                      <span className="payment-chip-pill">
-                        {order.paymentMethod.toUpperCase()}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="courier-pill">
-                        <Truck size={12} color="#4A5B4F" />
-                        <span style={{ fontWeight: 600 }}>{courierInfo.courier}</span>
-                        <span className="tracking-id-text">{courierInfo.code}</span>
-                      </div>
-                    </td>
-                    <td>
-                      <span className={`status-pill-modern ${order.status.toLowerCase()}`}>
-                        <span className="status-dot"></span>
-                        {order.status}
-                      </span>
-                    </td>
-                    <td style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-                      {new Date(order.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </td>
-                    <td style={{ textAlign: 'right' }}>
+                    </div>
+                    <span className="mobile-items-summary">
+                      {order.items.map(it => `${it.quantity}x ${it.product.title}`).join(', ')}
+                    </span>
+                  </div>
+
+                  <div className="mobile-order-card-bottom">
+                    <div className="mobile-courier-tag">
+                      <Truck size={12} color="#4A5B4F" />
+                      <span>{courierInfo.courier} • {courierInfo.code}</span>
+                    </div>
+                    <div className="mobile-order-pricing-action">
+                      <strong className="mobile-order-total">₹{order.total.toLocaleString()}</strong>
                       <button 
-                        className="btn-quick-view"
-                        onClick={() => setSelectedOrder(order)}
-                        title="View Order Details"
+                        className="btn-quick-view-mobile"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedOrder(order);
+                        }}
                       >
-                        <Eye size={13} />
-                        <span>Quick View</span>
+                        <span>View</span>
+                        <ChevronRight size={13} />
                       </button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
 
       {/* Quick View Slide-over Modal */}
