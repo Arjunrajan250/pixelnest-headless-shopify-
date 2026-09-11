@@ -5,9 +5,9 @@ import {
   Share2, 
   Heart, 
   Star, 
-  Download, 
-  Printer, 
-  FileText, 
+  Truck, 
+  ShieldCheck, 
+  PackageCheck, 
   CheckCircle2, 
   ShoppingBag,
   Check
@@ -62,9 +62,10 @@ export const ProductDetailModal: React.FC = () => {
 
   return (
     <div className="product-detail-view">
+      {/* Top Navigation */}
       <div className="detail-nav-bar">
         <button 
-          className="icon-btn-pill"
+          className="icon-btn-pill" 
           onClick={() => {
             setSelectedProduct(null);
             setActiveTab('home');
@@ -83,37 +84,49 @@ export const ProductDetailModal: React.FC = () => {
             <Share2 size={18} />
           </button>
           <button 
-            className={`icon-btn-pill ${isWishlisted ? 'active' : ''}`}
+            className="icon-btn-pill"
             onClick={() => toggleWishlist(selectedProduct.id)}
-            title={isWishlisted ? 'In Wishlist' : 'Add to Wishlist'}
+            title="Wishlist"
           >
-            <Heart size={18} fill={isWishlisted ? '#C24134' : 'none'} color={isWishlisted ? '#C24134' : 'currentColor'} />
+            <Heart 
+              size={18} 
+              style={{ 
+                fill: isWishlisted ? '#C84B4B' : 'transparent', 
+                color: isWishlisted ? '#C84B4B' : 'var(--text-main)' 
+              }} 
+            />
           </button>
         </div>
       </div>
 
+      {/* Gallery */}
       <div className="detail-gallery-main">
         <img 
-          src={images[activeImageIndex] || selectedProduct.imageUrl} 
-          alt={selectedProduct.title} 
+          src={images[activeImageIndex]} 
+          alt={selectedProduct.title}
+          className="detail-main-img"
         />
+        {selectedProduct.category && (
+          <span className="detail-category-badge">{selectedProduct.category}</span>
+        )}
       </div>
 
       {images.length > 1 && (
         <div className="detail-thumbnails-row">
-          {images.map((img, idx) => (
-            <div 
+          {images.map((imgUrl, idx) => (
+            <button
               key={idx}
-              className={`detail-thumbnail-item ${activeImageIndex === idx ? 'active' : ''}`}
+              className={`detail-thumb-btn ${idx === activeImageIndex ? 'active' : ''}`}
               onClick={() => setActiveImageIndex(idx)}
             >
-              <img src={img} alt={`Preview ${idx + 1}`} />
-            </div>
+              <img src={imgUrl} alt={`Thumbnail ${idx + 1}`} />
+            </button>
           ))}
         </div>
       )}
 
-      <div className="detail-content-body">
+      {/* Info Content */}
+      <div className="detail-info-content">
         <h1 className="detail-title">{selectedProduct.title}</h1>
         {selectedProduct.subtitle && (
           <p className="detail-subtitle">{selectedProduct.subtitle}</p>
@@ -140,9 +153,9 @@ export const ProductDetailModal: React.FC = () => {
           {selectedProduct.features && selectedProduct.features.length > 0 ? (
             selectedProduct.features.map((feat, i) => (
               <div key={i} className="detail-feature-item">
-                {i === 0 ? <Download size={16} className="detail-feature-icon" /> :
-                 i === 1 ? <Printer size={16} className="detail-feature-icon" /> :
-                 i === 2 ? <FileText size={16} className="detail-feature-icon" /> :
+                {i === 0 ? <Truck size={16} className="detail-feature-icon" /> :
+                 i === 1 ? <ShieldCheck size={16} className="detail-feature-icon" /> :
+                 i === 2 ? <PackageCheck size={16} className="detail-feature-icon" /> :
                  <CheckCircle2 size={16} className="detail-feature-icon" />}
                 <span>{feat}</span>
               </div>
@@ -150,20 +163,45 @@ export const ProductDetailModal: React.FC = () => {
           ) : (
             <>
               <div className="detail-feature-item">
-                <Download size={16} className="detail-feature-icon" />
-                <span>Instant Download (PDF)</span>
+                <Truck size={16} className="detail-feature-icon" />
+                <span>Free Insured Express Shipping</span>
               </div>
               <div className="detail-feature-item">
-                <Printer size={16} className="detail-feature-icon" />
-                <span>Printable & Digital Use</span>
+                <ShieldCheck size={16} className="detail-feature-icon" />
+                <span>1-Year Official Replacement Warranty</span>
               </div>
               <div className="detail-feature-item">
-                <FileText size={16} className="detail-feature-icon" />
-                <span>A4, A5, US Letter Sizes</span>
+                <PackageCheck size={16} className="detail-feature-icon" />
+                <span>Tested & Certified Build Quality</span>
               </div>
             </>
           )}
         </div>
+
+        {selectedProduct.specs && (
+          <div style={{ margin: '18px 0' }}>
+            <h3 className="detail-section-title">Specifications</h3>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+              gap: '8px', 
+              marginTop: '8px' 
+            }}>
+              {Object.entries(selectedProduct.specs).map(([key, val]) => (
+                <div key={key} style={{ 
+                  background: 'var(--bg-surface)', 
+                  padding: '8px 12px', 
+                  borderRadius: 'var(--radius-sm)', 
+                  border: '1px solid var(--border-light)',
+                  fontSize: '12px'
+                }}>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{key}</div>
+                  <div style={{ fontWeight: 600, color: 'var(--text-main)', marginTop: '2px' }}>{val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <h3 className="detail-section-title">About this product</h3>
         <p className="detail-desc-text">{selectedProduct.description}</p>

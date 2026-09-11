@@ -3,247 +3,374 @@ import { Product, Order, ShopifyConfig } from '../types';
 export const INITIAL_PRODUCTS: Product[] = [
   {
     id: 'prod-1',
-    title: 'Minimal Daily Planner',
-    handle: 'minimal-daily-planner',
-    subtitle: 'Stay organized, focused and productive.',
-    description: 'A simple and aesthetic daily planner to help you organize your tasks, set goals and build better habits. Perfect for students, professionals and anyone who wants a more productive life. Compatible with GoodNotes, Notability, and printable on standard paper.',
-    category: 'Planners',
-    subCategory: 'Daily',
-    price: 299,
-    compareAtPrice: 499,
-    rating: 4.8,
-    reviewsCount: 2400,
-    imageUrl: '/images/planner.jpg',
+    title: 'Ergonomic Wireless Mouse',
+    handle: 'ergonomic-wireless-mouse',
+    subtitle: 'Silent clicks, dual 2.4GHz & Bluetooth 5.2, sculpted comfort.',
+    description: 'Engineered for all-day comfort and silent precision. Features whisper-quiet microswitches, high-precision 4000 DPI optical sensor, textured matte side grips, and rechargeable 500mAh battery with Type-C fast charging. Works seamlessly across macOS, Windows, and iPadOS.',
+    category: 'Peripherals',
+    subCategory: 'Mice',
+    price: 1499,
+    compareAtPrice: 2499,
+    rating: 4.9,
+    reviewsCount: 3420,
+    imageUrl: '/images/mouse.jpg',
     gallery: [
-      '/images/planner.jpg',
-      '/images/wellness_planner.jpg',
-      '/images/templates.jpg',
-      '/images/hero.jpg'
+      '/images/mouse.jpg',
+      '/images/keyboard.jpg',
+      '/images/hardware_hero.jpg'
     ],
     features: [
-      'Instant Download (PDF)',
-      'Printable & Digital Use',
-      'A4, A5, US Letter Sizes',
-      'GoodNotes & Notability Ready',
-      'Undated — Reuse Every Year'
+      'Whisper-Quiet Silent Switches',
+      '4000 DPI Precision Sensor',
+      'Bluetooth 5.2 + 2.4GHz USB Dongle',
+      'Type-C Rechargeable (60-day battery)',
+      'Contoured Ergonomic Palm Rest'
     ],
+    specs: {
+      'Connectivity': 'Wireless 2.4GHz + Bluetooth 5.2',
+      'Sensor': 'High-Precision Optical 4000 DPI',
+      'Battery': 'Rechargeable 500mAh (Up to 60 Days)',
+      'Weight': '88g lightweight',
+      'Warranty': '1 Year Official Replacement Warranty'
+    },
+    warranty: '1 Year Brand Warranty',
+    shippingInfo: 'Free 2-Day Express Delivery',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/minimal-daily-planner.pdf',
-    downloadFileName: 'Minimal_Daily_Planner_2025.pdf',
-    fileSize: '4.2 MB',
+    downloadUrl: '/downloads/mouse-manual.pdf',
+    downloadFileName: 'Ergonomic_Mouse_User_Guide.pdf',
+    fileSize: '1.8 MB',
     isTrending: true,
     createdAt: '2025-08-01T10:00:00Z'
   },
   {
     id: 'prod-2',
-    title: 'Social Media Templates',
-    handle: 'social-media-templates',
-    subtitle: 'Curated neutral aesthetic for creators and brands.',
-    description: '100+ fully customizable Canva and Figma social media templates. Boost your engagement with clean layouts, moodboards, educational carousels, and minimal story designs tailored for aesthetic brands.',
-    category: 'Templates',
-    subCategory: 'Instagram',
-    price: 399,
-    compareAtPrice: 599,
+    title: 'Custom Mechanical Keyboard',
+    handle: 'custom-mechanical-keyboard',
+    subtitle: '75% Gasket-mounted tactile switches with warm backlighting.',
+    description: 'A luxurious typing experience built with CNC aluminum frame, pre-lubed Gateron Pro Yellow tactile switches, sound-dampening acoustic foams, and thick dye-sub PBT keycaps. Fully hot-swappable with cross-platform Mac and Windows keycaps included.',
+    category: 'Peripherals',
+    subCategory: 'Keyboards',
+    price: 4299,
+    compareAtPrice: 6999,
     rating: 4.9,
-    reviewsCount: 3100,
-    imageUrl: '/images/templates.jpg',
+    reviewsCount: 4890,
+    imageUrl: '/images/keyboard.jpg',
     gallery: [
-      '/images/templates.jpg',
-      '/images/planner.jpg',
-      '/images/hero.jpg'
+      '/images/keyboard.jpg',
+      '/images/mouse.jpg',
+      '/images/hardware_hero.jpg'
     ],
     features: [
-      'Instant Canva & Figma Access',
-      '100+ Unique Grid & Story Layouts',
-      'Neutral Earthy Palette',
-      'Commercial License Included'
+      'Hot-Swappable 5-Pin Sockets',
+      'Gasket Mount Sound Dampening',
+      'Factory Pre-Lubed Mechanical Switches',
+      'Thick PBT Dye-Sub Keycaps',
+      'Multi-Device Tri-Mode Connectivity'
     ],
+    specs: {
+      'Layout': '75% Compact (82 Keys)',
+      'Switches': 'Tactile Pre-lubed 45g',
+      'Connectivity': 'Type-C Wired / 2.4G / Bluetooth 5.0',
+      'Battery': '4000mAh (Up to 200 hours backlight off)',
+      'Warranty': '1 Year Official Warranty'
+    },
+    warranty: '1 Year Brand Warranty',
+    shippingInfo: 'Free Express Shipping with Tracking',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/social-media-templates.zip',
-    downloadFileName: 'Social_Media_Templates_Canva_Pack.zip',
-    fileSize: '18.5 MB',
+    downloadUrl: '/downloads/keyboard-manual.pdf',
+    downloadFileName: 'Mechanical_Keyboard_Manual.pdf',
+    fileSize: '2.4 MB',
     isTrending: true,
-    createdAt: '2025-08-05T12:00:00Z'
+    createdAt: '2025-08-02T10:00:00Z'
   },
   {
     id: 'prod-3',
-    title: 'The Productivity Planner',
-    handle: 'the-productivity-planner',
-    subtitle: 'Achieve your top 3 daily priorities without burnout.',
-    description: 'Designed around the Rule of 3 and Pomodoro technique, this planner cuts through digital noise so you can prioritize deeply impactful work every morning.',
-    category: 'Planners',
-    subCategory: 'Daily',
-    price: 299,
-    compareAtPrice: 499,
-    rating: 4.7,
-    reviewsCount: 1900,
-    imageUrl: '/images/planner.jpg',
+    title: '34" 4K Curved UltraWide Monitor',
+    handle: '4k-curved-ultrawide-monitor',
+    subtitle: '1500R curvature, 144Hz refresh rate, 90W USB-C power delivery.',
+    description: 'Immerse yourself in panoramic productivity and rich cinematic visuals. Featuring an expansive 21:9 aspect ratio, 3840x1600 resolution, 99% sRGB color gamut, and single-cable Type-C hub that charges your laptop while transmitting 4K video and peripherals data.',
+    category: 'Displays',
+    subCategory: 'Monitors',
+    price: 24999,
+    compareAtPrice: 34999,
+    rating: 4.8,
+    reviewsCount: 2150,
+    imageUrl: '/images/monitor.jpg',
     gallery: [
-      '/images/planner.jpg',
-      '/images/hero.jpg'
+      '/images/monitor.jpg',
+      '/images/monitor_arm.jpg',
+      '/images/hardware_hero.jpg'
     ],
     features: [
-      'Instant Download (PDF)',
-      'Time-Blocking Daily Schedules',
-      'Habit & Focus Trackers',
-      'Interactive Hyperlinks'
+      '34-inch 1500R Immersive Curve',
+      '144Hz Refresh Rate & 1ms MPRT',
+      'USB-C 90W Laptop PD Charging',
+      'HDR400 & 99% sRGB Factory Calibrated',
+      'Built-in KVM Switch & Dual Speakers'
     ],
+    specs: {
+      'Resolution': '3840 x 1600 UWQHD',
+      'Panel': 'Nano IPS Antiglare',
+      'Ports': 'USB-C (90W), 2x HDMI 2.1, 1x DP 1.4, 3x USB 3.0',
+      'Mount': 'VESA 100x100mm Compatible',
+      'Warranty': '3 Years Zero-Dead-Pixel Warranty'
+    },
+    warranty: '3 Years Panel Warranty',
+    shippingInfo: 'Insured White-Glove Courier Delivery',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/productivity-planner.pdf',
-    downloadFileName: 'The_Productivity_Planner.pdf',
-    fileSize: '3.8 MB',
+    downloadUrl: '/downloads/monitor-specs.pdf',
+    downloadFileName: '4K_UltraWide_Monitor_Guide.pdf',
+    fileSize: '3.1 MB',
     isTrending: true,
-    createdAt: '2025-08-02T09:30:00Z'
+    createdAt: '2025-08-03T10:00:00Z'
   },
   {
     id: 'prod-4',
-    title: 'Wellness Planner',
-    handle: 'wellness-planner',
-    subtitle: 'Nourish your body, calm your mind, and track routines.',
-    description: 'Mindful tracking for daily hydration, nutritious meals, sleep cycles, gentle workouts, and gratitude affirmations. Your calming sanctuary in a busy world.',
-    category: 'Planners',
-    subCategory: 'Daily',
-    price: 349,
-    compareAtPrice: 549,
-    rating: 4.7,
-    reviewsCount: 1800,
-    imageUrl: '/images/wellness_planner.jpg',
+    title: '140W GaN 4-Port Fast Multi-Charger',
+    handle: '140w-gan-multi-port-charger',
+    subtitle: 'Gallium Nitride fast charging for MacBook, iPhone, and Android.',
+    description: 'One compact charger to power your entire desk setup. Powered by next-generation GaN III technology, delivers up to 140W single-port speed to charge a 16-inch MacBook Pro to 55% in 30 minutes, or distribute power intelligently across 3 USB-C and 1 USB-A port.',
+    category: 'Power & Charging',
+    subCategory: 'Chargers',
+    price: 2899,
+    compareAtPrice: 4299,
+    rating: 4.9,
+    reviewsCount: 5210,
+    imageUrl: '/images/charger.jpg',
     gallery: [
-      '/images/wellness_planner.jpg',
-      '/images/planner.jpg'
+      '/images/charger.jpg',
+      '/images/cable_organizer.jpg'
     ],
     features: [
-      'Instant Download (PDF)',
-      'Daily Gratitude & Mindfulness',
-      'Meal & Hydration Tracking',
-      'Sleep & Mood Logs'
+      '140W Max Power Delivery 3.1',
+      'GaN III Semiconductor Efficiency',
+      'Intelligent Dynamic Power Balancing',
+      'Foldable Compact Travel Prongs',
+      'Active Temperature & Surge Protection'
     ],
+    specs: {
+      'Outputs': '3x USB-C (140W max), 1x USB-A (22.5W)',
+      'Total Output': '140W Shared Intelligent Distribution',
+      'Dimensions': '75 x 75 x 30 mm',
+      'Certifications': 'BIS, CE, FCC, RoHS Certified',
+      'Warranty': '18 Months Replacement Warranty'
+    },
+    warranty: '18 Months Brand Warranty',
+    shippingInfo: 'Same-Day Dispatch, Free Delivery',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/wellness-planner.pdf',
-    downloadFileName: 'Wellness_Mindfulness_Journal.pdf',
-    fileSize: '5.1 MB',
-    isTrending: false,
-    createdAt: '2025-08-08T15:00:00Z'
+    downloadUrl: '/downloads/charger-manual.pdf',
+    downloadFileName: 'GaN_140W_Charger_Manual.pdf',
+    fileSize: '1.2 MB',
+    isTrending: true,
+    createdAt: '2025-08-04T10:00:00Z'
   },
   {
     id: 'prod-5',
-    title: 'Student Planner',
-    handle: 'student-planner',
-    subtitle: 'Ace your semesters, deadlines, and exams stress-free.',
-    description: 'Comprehensive academic planner covering course schedules, assignment deadlines, reading trackers, grade calculators, and group project organizers.',
-    category: 'Planners',
-    subCategory: 'Weekly',
-    price: 249,
-    compareAtPrice: 399,
-    rating: 4.6,
-    reviewsCount: 1100,
-    imageUrl: '/images/planner.jpg',
+    title: 'Retro Magma Ambient Lava Lamp',
+    handle: 'retro-magma-ambient-lava-lamp',
+    subtitle: 'Hypnotic slow-motion wax fluid in warm sunset orange.',
+    description: 'Bring iconic mid-century warmth and soothing tranquility to your bedside table or workstation. Crafted with brushed metallic aluminum casing, crystal-clear borosilicate glass, and non-toxic specially formulated fluid that creates mesmerizing flowing globes of warm ambient light.',
+    category: 'Home & Living',
+    subCategory: 'Lighting',
+    price: 1899,
+    compareAtPrice: 2999,
+    rating: 4.8,
+    reviewsCount: 1980,
+    imageUrl: '/images/lava_lamp.jpg',
     gallery: [
-      '/images/planner.jpg',
-      '/images/wellness_planner.jpg'
+      '/images/lava_lamp.jpg',
+      '/images/hardware_hero.jpg'
     ],
     features: [
-      'Instant Download (PDF)',
-      'Semester Timetable & Syllabi',
-      'Assignment & Exam Trackers',
-      'Budget & Study Logs'
+      'Hypnotic Soothing Motion Fluid',
+      'Brushed Aluminum Top & Base',
+      'Warm Ambient Calming Light (40W bulb)',
+      'Heavyweight Stable Base',
+      'Includes Spare Bulb & Heat Deflector'
     ],
+    specs: {
+      'Height': '14.5 Inches (37 cm)',
+      'Base': 'Spun Brushed Aluminum',
+      'Bulb': '40W E14 High-Temperature Bulb',
+      'Safety': 'Heat-Resistant Borosilicate Glass',
+      'Warranty': '1 Year Official Warranty'
+    },
+    warranty: '1 Year Warranty',
+    shippingInfo: 'Shockproof Bubble Pack Delivery',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/student-planner.pdf',
-    downloadFileName: 'Ultimate_Student_Academic_Planner.pdf',
-    fileSize: '6.4 MB',
-    isTrending: false,
-    createdAt: '2025-08-10T11:00:00Z'
+    downloadUrl: '/downloads/lava-lamp-guide.pdf',
+    downloadFileName: 'Lava_Lamp_Care_Guide.pdf',
+    fileSize: '1.5 MB',
+    isTrending: true,
+    createdAt: '2025-08-05T10:00:00Z'
   },
   {
     id: 'prod-6',
-    title: 'Budget Planner',
-    handle: 'budget-planner',
-    subtitle: 'Take control of your finances, savings, and investments.',
-    description: 'Empowering personal finance system with zero-based budgeting, debt snowball tracking, sinking funds, annual income overviews, and monthly expense sheets.',
-    category: 'Planners',
-    subCategory: 'Monthly',
-    price: 299,
-    compareAtPrice: 499,
+    title: 'Heavy Duty Magnetic Kitchen Hooks',
+    handle: 'heavy-duty-magnetic-kitchen-hooks',
+    subtitle: 'Set of 6 ultra-strong neodymium hooks with anti-scratch silicone pads.',
+    description: 'Instant clutter-free kitchen and workstation organization without drilling any holes. Triple-plated with matte black powder coating and heavy-duty grade N52 neodymium magnets capable of supporting up to 8kg vertically on refrigerators, range hoods, or metal pegboards.',
+    category: 'Home & Living',
+    subCategory: 'Hooks',
+    price: 699,
+    compareAtPrice: 1199,
     rating: 4.9,
-    reviewsCount: 3200,
-    imageUrl: '/images/planner.jpg',
+    reviewsCount: 6420,
+    imageUrl: '/images/kitchen_hooks.jpg',
     gallery: [
-      '/images/planner.jpg',
-      '/images/templates.jpg'
+      '/images/kitchen_hooks.jpg'
     ],
     features: [
-      'Instant Download (PDF & Excel/Sheets)',
-      'Zero-based Monthly Budgeting',
-      'Debt Payoff Calculators',
-      'Sinking Funds & Savings Goals'
+      'Triple-Strength N52 Neodymium Core',
+      '8kg Vertical Pull Capacity per hook',
+      'Anti-Scratch Soft Protective Rubber Base',
+      'Zero Tools, Zero Drilling Required',
+      'Matte Black Rust-Proof Finish'
     ],
+    specs: {
+      'Quantity': 'Pack of 6 Heavy Duty Hooks',
+      'Magnetic Grade': 'N52 Rare Earth Neodymium',
+      'Capacity': 'Up to 8kg (17.6 lbs) vertical hold',
+      'Finish': 'Rust-Resistant Matte Black Powder Coat',
+      'Warranty': 'Lifetime Magnetism Guarantee'
+    },
+    warranty: 'Lifetime Magnetism Guarantee',
+    shippingInfo: 'In Stock • Ready to Ship',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/budget-planner.pdf',
-    downloadFileName: 'Budget_Financial_Planner.pdf',
-    fileSize: '4.9 MB',
-    isTrending: false,
-    createdAt: '2025-08-11T14:30:00Z'
+    downloadUrl: '/downloads/hooks-guide.pdf',
+    downloadFileName: 'Magnetic_Hooks_Guide.pdf',
+    fileSize: '950 KB',
+    isTrending: true,
+    createdAt: '2025-08-06T10:00:00Z'
   },
   {
     id: 'prod-7',
-    title: 'Self Care Guide E-Book',
-    handle: 'self-care-guide-ebook',
-    subtitle: 'A nurturing companion for mind, body, & soul.',
-    description: 'An insightful 120-page handbook on building slow rituals, setting emotional boundaries, cultivating inner stillness, and reconnecting with what brings genuine joy.',
-    category: 'Ebooks',
-    subCategory: 'Wellness',
-    price: 199,
-    compareAtPrice: 349,
-    rating: 4.8,
-    reviewsCount: 950,
-    imageUrl: '/images/ebook_cover.jpg',
+    title: 'Gas Spring Monitor Desk Mount Arm',
+    handle: 'gas-spring-monitor-desk-mount',
+    subtitle: 'Full motion 360° rotation for 17" to 35" screens.',
+    description: 'Reclaim valuable desk space and position your screen at the ideal ergonomic eye level. Built with automotive-grade gas struts, heavy-duty clamp and grommet mounting options, and concealed cable management channels to keep your workspace pristine.',
+    category: 'Displays',
+    subCategory: 'Mounts',
+    price: 2199,
+    compareAtPrice: 3499,
+    rating: 4.7,
+    reviewsCount: 1650,
+    imageUrl: '/images/monitor_arm.jpg',
     gallery: [
-      '/images/ebook_cover.jpg',
-      '/images/wellness_planner.jpg'
+      '/images/monitor_arm.jpg',
+      '/images/monitor.jpg'
     ],
     features: [
-      'Instant Download (EPUB & PDF)',
-      '120 Pages of Thoughtful Essays',
-      'Reflective Prompts & Exercises',
-      'Audio Affirmations Bonus'
+      'Smooth Counterbalanced Gas Spring',
+      'Supports Monitors 2kg - 10kg',
+      'VESA 75x75 & 100x100 Compatible',
+      'Integrated Concealed Cable Routing',
+      'C-Clamp & Grommet Base Included'
     ],
+    specs: {
+      'Supported Sizes': '17" - 35" Monitors',
+      'Weight Capacity': '2 to 10 kg',
+      'Tilt Range': '+90° to -45°',
+      'Rotation': '360° Portrait / Landscape',
+      'Warranty': '2 Years Mechanical Warranty'
+    },
+    warranty: '2 Years Mechanical Warranty',
+    shippingInfo: 'Free Express Shipping',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/self-care-guide.pdf',
-    downloadFileName: 'Self_Care_Guide_Eleanor_Vance.pdf',
-    fileSize: '8.7 MB',
+    downloadUrl: '/downloads/monitor-arm-manual.pdf',
+    downloadFileName: 'Monitor_Arm_Installation.pdf',
+    fileSize: '3.4 MB',
     isTrending: false,
-    createdAt: '2025-08-03T16:00:00Z'
+    createdAt: '2025-08-07T10:00:00Z'
   },
   {
     id: 'prod-8',
-    title: 'Minimalist Lightroom Presets',
-    handle: 'minimalist-lightroom-presets',
-    subtitle: 'Soft warmth, organic tones, and dreamy natural light.',
-    description: '12 professional Lightroom presets for mobile and desktop. Transforms iPhone and camera photos into cozy, warm-toned editorial memories in just one click.',
-    category: 'Presets',
-    subCategory: 'Mobile',
-    price: 249,
-    compareAtPrice: 449,
-    rating: 4.7,
-    reviewsCount: 680,
-    imageUrl: '/images/templates.jpg',
+    title: 'Studio Eye-Care Monitor Light Bar',
+    handle: 'studio-eye-care-monitor-light-bar',
+    subtitle: 'Asymmetric anti-glare optical design with wireless touch puck.',
+    description: 'Zero screen glare, zero eye strain. Features 45-degree angled asymmetric optical illumination that lights up your desk surface without reflecting off your screen. Adjustable color temperature (2700K to 6500K) with stepped touch dimmer and ambient light sensing.',
+    category: 'Desk Setup',
+    subCategory: 'Lighting',
+    price: 1999,
+    compareAtPrice: 3299,
+    rating: 4.9,
+    reviewsCount: 4120,
+    imageUrl: '/images/lightbar.jpg',
     gallery: [
-      '/images/templates.jpg',
-      '/images/hero.jpg'
+      '/images/lightbar.jpg',
+      '/images/monitor.jpg'
     ],
     features: [
-      '12 Mobile (DNG) & Desktop (XMP) Presets',
-      'One-Click Installation Guide',
-      'Compatible with Free Lightroom App',
-      'Skin-Tone Friendly Tones'
+      'Asymmetric Anti-Screen Glare Optics',
+      'Stepless Dimming & Color Temp Control',
+      'Ra95 High Color Rendering Index',
+      'Weighted Counterbalance Clamp (No adhesives)',
+      'Auto-Dimming Ambient Light Sensor'
     ],
+    specs: {
+      'Length': '45 cm (17.7 inches)',
+      'Color Temperature': '2700K - 6500K Stepless',
+      'CRI': 'Ra > 95 True Color',
+      'Power': 'USB Type-C 5V 1A (Powered by monitor)',
+      'Warranty': '1 Year Full Replacement'
+    },
+    warranty: '1 Year Official Warranty',
+    shippingInfo: 'Free 2-Day Delivery',
+    inStock: true,
     status: 'active',
-    downloadUrl: '/downloads/presets-pack.zip',
-    downloadFileName: 'PixelNest_Lightroom_Presets.zip',
-    fileSize: '12.1 MB',
+    downloadUrl: '/downloads/lightbar-manual.pdf',
+    downloadFileName: 'Light_Bar_User_Manual.pdf',
+    fileSize: '1.6 MB',
     isTrending: false,
-    createdAt: '2025-08-04T18:00:00Z'
+    createdAt: '2025-08-08T10:00:00Z'
+  },
+  {
+    id: 'prod-9',
+    title: 'Magnetic Desk Cable Organizer & Hub',
+    handle: 'magnetic-desk-cable-organizer',
+    subtitle: 'Weighted metallic base with 5 magnetic snap collars.',
+    description: 'Keep charging and display cables securely within arm reach instead of dropping behind your desk. Features a weighted matte metallic baseplate with non-slip micro-suction underside and 5 precision magnetic snap collars for flat, braided, and round cables.',
+    category: 'Desk Setup',
+    subCategory: 'Accessories',
+    price: 499,
+    compareAtPrice: 899,
+    rating: 4.8,
+    reviewsCount: 3820,
+    imageUrl: '/images/cable_organizer.jpg',
+    gallery: [
+      '/images/cable_organizer.jpg',
+      '/images/charger.jpg'
+    ],
+    features: [
+      '5 Magnetic Universal Cable Collars',
+      'Heavy Weighted Metal Baseplate',
+      'Reusable Residue-Free Micro-Suction Base',
+      'Fits Cables up to 5.5mm Diameter',
+      'Sleek Minimalist Aesthetic'
+    ],
+    specs: {
+      'Dimensions': '90 x 20 x 4 mm',
+      'Material': 'Anodized Aluminum Alloy + Silicone',
+      'Magnetic Strength': 'Neodymium Snap Grip',
+      'Compatibility': 'Lightning, USB-C, HDMI, Micro-USB',
+      'Warranty': '1 Year Guarantee'
+    },
+    warranty: '1 Year Warranty',
+    shippingInfo: 'In Stock • Ships in 24h',
+    inStock: true,
+    status: 'active',
+    downloadUrl: '/downloads/cable-hub-guide.pdf',
+    downloadFileName: 'Cable_Organizer_Setup.pdf',
+    fileSize: '820 KB',
+    isTrending: false,
+    createdAt: '2025-08-09T10:00:00Z'
   }
 ];
 
@@ -253,91 +380,99 @@ export const INITIAL_ORDERS: Order[] = [
     orderNumber: 'DN24876',
     customerName: 'Aesthetic Girl',
     customerEmail: 'aestheticgirl@gmail.com',
-    shippingAddress: '742 Evergreen Terrace, Digital Studio 4B',
+    shippingAddress: 'Flat 402, Lotus Greens, Indiranagar, Bengaluru, KA 560038',
     items: [
       {
-        product: INITIAL_PRODUCTS[0], // Minimal Daily Planner
+        product: INITIAL_PRODUCTS[0], // Ergonomic Wireless Mouse
+        quantity: 1
+      },
+      {
+        product: INITIAL_PRODUCTS[3], // 140W GaN Charger
         quantity: 1
       }
     ],
-    subtotal: 299,
-    discount: 0,
-    total: 299,
+    subtotal: 4398,
+    discount: 440,
+    discountCode: 'FIRST10',
+    total: 3958,
     paymentMethod: 'upi',
     status: 'Completed',
-    date: '2025-08-12T14:20:00Z',
-    deliveryDate: 'Delivered on 12 Aug 2025'
+    date: '2025-09-08T11:20:00Z',
+    deliveryDate: 'Delivered via BlueDart (Tracking: BD8492019)'
   },
   {
     id: 'order-2',
-    orderNumber: 'DN24875',
+    orderNumber: 'DN24879',
     customerName: 'Aesthetic Girl',
     customerEmail: 'aestheticgirl@gmail.com',
-    shippingAddress: '742 Evergreen Terrace, Digital Studio 4B',
+    shippingAddress: 'Flat 402, Lotus Greens, Indiranagar, Bengaluru, KA 560038',
     items: [
       {
-        product: INITIAL_PRODUCTS[1], // Social Media Templates
+        product: INITIAL_PRODUCTS[1], // Custom Mechanical Keyboard
         quantity: 1
       }
     ],
-    subtotal: 399,
-    discount: 100,
-    discountCode: 'WELCOME100',
-    total: 299,
+    subtotal: 4299,
+    discount: 0,
+    total: 4299,
     paymentMethod: 'card',
-    status: 'Completed',
-    date: '2025-08-08T11:45:00Z',
-    deliveryDate: 'Delivered on 8 Aug 2025'
+    status: 'Processing',
+    date: '2025-09-10T14:30:00Z',
+    deliveryDate: 'Out for Delivery with Delhivery (Tracking: DL772910)'
   },
   {
     id: 'order-3',
-    orderNumber: 'DN24860',
-    customerName: 'Aesthetic Girl',
-    customerEmail: 'aestheticgirl@gmail.com',
-    shippingAddress: '742 Evergreen Terrace, Digital Studio 4B',
+    orderNumber: 'DN24882',
+    customerName: 'Marcus Vance',
+    customerEmail: 'marcus.v@techflow.io',
+    shippingAddress: '74 Silicon Boulevard, Koramangala, Bengaluru, KA 560034',
     items: [
       {
-        product: INITIAL_PRODUCTS[6], // Self Care E-Book
+        product: INITIAL_PRODUCTS[4], // Retro Magma Lava Lamp
         quantity: 1
+      },
+      {
+        product: INITIAL_PRODUCTS[5], // Kitchen Hooks
+        quantity: 2
       }
     ],
-    subtotal: 199,
+    subtotal: 3297,
     discount: 0,
-    total: 199,
+    total: 3297,
     paymentMethod: 'upi',
     status: 'Completed',
-    date: '2025-08-02T16:10:00Z',
-    deliveryDate: 'Delivered on 2 Aug 2025'
+    date: '2025-09-02T16:10:00Z',
+    deliveryDate: 'Delivered on 4 Sep 2025 via FedEx'
   },
   {
     id: 'order-4',
     orderNumber: 'DN24889',
     customerName: 'Sophia Miller',
     customerEmail: 'sophia.m@designstudio.co',
-    shippingAddress: '12 West Kensington, London',
+    shippingAddress: 'Tower B-1204, Highclere Palms, Powai, Mumbai, MH 400076',
     items: [
       {
-        product: INITIAL_PRODUCTS[0], // Minimal Daily Planner
+        product: INITIAL_PRODUCTS[2], // 4K Curved Monitor
         quantity: 1
       },
       {
-        product: INITIAL_PRODUCTS[3], // Wellness Planner
+        product: INITIAL_PRODUCTS[6], // Monitor Arm
         quantity: 1
       }
     ],
-    subtotal: 648,
-    discount: 65,
+    subtotal: 27198,
+    discount: 1000,
     discountCode: 'FIRST10',
-    total: 583,
-    paymentMethod: 'paypal',
+    total: 26198,
+    paymentMethod: 'card',
     status: 'Processing',
     date: '2025-09-10T09:15:00Z',
-    deliveryDate: 'Processing fulfillment'
+    deliveryDate: 'In Transit • Expected Tomorrow via BlueDart'
   }
 ];
 
 export const INITIAL_SHOPIFY_CONFIG: ShopifyConfig = {
-  shopDomain: 'pixelnest-digital.myshopify.com',
+  shopDomain: 'pixelnest-hardware.myshopify.com',
   storefrontAccessToken: '9f8b7c6d5e4a3b2c1d0e',
   adminAccessToken: 'shpat_demo_admin_token_123456',
   apiVersion: '2024-01',
@@ -347,10 +482,10 @@ export const INITIAL_SHOPIFY_CONFIG: ShopifyConfig = {
 };
 
 export const CATEGORIES_META = [
-  { name: 'Planners', count: 12, icon: 'Calendar', desc: 'Daily, weekly, and monthly life planners' },
-  { name: 'Ebooks', count: 18, icon: 'BookOpen', desc: 'Guides for mindfulness, growth, and habits' },
-  { name: 'Templates', count: 20, icon: 'Layout', desc: 'Canva & Notion aesthetic social layouts' },
-  { name: 'Presets', count: 11, icon: 'Sparkles', desc: 'Lightroom filters for natural tones' },
-  { name: 'Courses', count: 8, icon: 'GraduationCap', desc: 'Self-paced creative masterclasses' },
-  { name: 'Others', count: 6, icon: 'FolderHeart', desc: 'Wallpapers, printables, and icons' }
+  { name: 'Peripherals', count: 18, icon: 'Mouse', desc: 'Ergonomic mice, mechanical keyboards, and trackpads' },
+  { name: 'Displays', count: 9, icon: 'Monitor', desc: 'Curved ultrawide screens, desk arms, and mounts' },
+  { name: 'Power & Charging', count: 14, icon: 'Zap', desc: 'GaN multi-port fast chargers, docks, and braided cables' },
+  { name: 'Home & Living', count: 16, icon: 'Flame', desc: 'Aesthetic lava lamps, magnetic kitchen hooks, and accents' },
+  { name: 'Desk Setup', count: 12, icon: 'LayoutGrid', desc: 'Screen light bars, cable organizers, and desk mats' },
+  { name: 'Others', count: 6, icon: 'Package', desc: 'Cleaning kits, adapters, and hardware accessories' }
 ];

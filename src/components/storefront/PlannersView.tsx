@@ -5,11 +5,9 @@ import { ArrowLeft, Search, SlidersHorizontal } from 'lucide-react';
 
 export const PlannersView: React.FC = () => {
   const { products, setActiveTab, setIsSearchOpen } = useStore();
-  const [filterSubCat, setFilterSubCat] = useState<'All' | 'Daily' | 'Weekly' | 'Monthly'>('All');
+  const [filterSubCat, setFilterSubCat] = useState<'All' | 'Mice' | 'Keyboards' | 'Monitors' | 'Chargers' | 'Lighting' | 'Hooks'>('All');
 
-  const plannerProducts = products.filter(p => {
-    const isPlanner = p.category === 'Planners';
-    if (!isPlanner) return false;
+  const filteredHardware = products.filter(p => {
     if (filterSubCat === 'All') return true;
     return p.subCategory === filterSubCat;
   });
@@ -18,25 +16,25 @@ export const PlannersView: React.FC = () => {
     <div className="collection-view-wrapper">
       <div className="storefront-header">
         <button 
-          className="icon-btn-pill"
+          className="icon-btn-pill" 
           onClick={() => setActiveTab('home')}
           title="Back"
         >
           <ArrowLeft size={18} />
         </button>
         <span style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 700 }}>
-          Planners
+          Hardware & Gear
         </span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
-            className="icon-btn-pill"
+            className="icon-btn-pill" 
             onClick={() => setIsSearchOpen(true)}
             title="Search"
           >
             <Search size={18} />
           </button>
           <button 
-            className="icon-btn-pill"
+            className="icon-btn-pill" 
             title="Filter options"
           >
             <SlidersHorizontal size={18} />
@@ -45,12 +43,12 @@ export const PlannersView: React.FC = () => {
       </div>
 
       <div className="collection-header-box">
-        <h2 className="collection-title">Plan your dreams with our digital planners.</h2>
-        <p className="collection-desc">Stay organized, focused and inspired.</p>
+        <h2 className="collection-title">Engineered for performance and comfort.</h2>
+        <p className="collection-desc">Premium peripherals, monitors, fast chargers, and lifestyle desk gear.</p>
       </div>
 
       <div className="filter-pills-row">
-        {(['All', 'Daily', 'Weekly', 'Monthly'] as const).map(cat => (
+        {(['All', 'Mice', 'Keyboards', 'Monitors', 'Chargers', 'Lighting', 'Hooks'] as const).map(cat => (
           <button
             key={cat}
             className={`filter-pill ${filterSubCat === cat ? 'active' : ''}`}
@@ -62,7 +60,7 @@ export const PlannersView: React.FC = () => {
       </div>
 
       <div className="product-grid-container">
-        {plannerProducts.map(product => (
+        {filteredHardware.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

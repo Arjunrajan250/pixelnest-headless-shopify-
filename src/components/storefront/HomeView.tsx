@@ -3,7 +3,7 @@ import { useStore } from '../../context/StoreContext';
 import { HeroBanner } from './HeroBanner';
 import { CategoryChips } from './CategoryChips';
 import { ProductCard } from './ProductCard';
-import { ArrowRight, DownloadCloud, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const HomeView: React.FC = () => {
   const { products, setActiveTab } = useStore();
@@ -17,7 +17,7 @@ export const HomeView: React.FC = () => {
       <CategoryChips />
 
       <div className="section-header-row">
-        <h2 className="section-title">Trending Now</h2>
+        <h2 className="section-title">Top Rated Hardware</h2>
         <button 
           className="section-link"
           onClick={() => setActiveTab('planners')}
@@ -34,18 +34,18 @@ export const HomeView: React.FC = () => {
 
       <div className="instant-download-banner">
         <div className="instant-download-icon">
-          <DownloadCloud size={18} />
+          <ShieldCheck size={20} />
         </div>
         <div>
-          <div className="instant-download-title">Instant Download</div>
-          <div className="instant-download-desc">Get your digital product and licenses right after purchase.</div>
+          <div className="instant-download-title">Free Express Shipping & 1-Year Warranty</div>
+          <div className="instant-download-desc">Official brand warranty on all hardware with doorstep delivery.</div>
         </div>
       </div>
 
       <div className="section-header-row" style={{ marginTop: '12px' }}>
         <h2 className="section-title">
           <Sparkles size={16} style={{ display: 'inline', marginRight: '6px', color: '#4A5B4F' }} />
-          Best for Productivity
+          Desk Setup & Lifestyle Gear
         </h2>
         <button 
           className="section-link"
@@ -56,7 +56,7 @@ export const HomeView: React.FC = () => {
       </div>
 
       <div className="product-grid-container">
-        {products.slice(2, 6).map(product => (
+        {products.slice(4).map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

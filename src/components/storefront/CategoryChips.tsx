@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
-import { Calendar, BookOpen, Layout, Sparkles } from 'lucide-react';
+import { Keyboard, Monitor, Zap, Flame } from 'lucide-react';
 import { ProductCategory } from '../../types';
 
 export const CategoryChips: React.FC<{
@@ -10,21 +10,17 @@ export const CategoryChips: React.FC<{
   const { setActiveTab } = useStore();
 
   const chips = [
-    { label: 'Planners', icon: Calendar, category: 'Planners' as ProductCategory },
-    { label: 'Ebooks', icon: BookOpen, category: 'Ebooks' as ProductCategory },
-    { label: 'Templates', icon: Layout, category: 'Templates' as ProductCategory },
-    { label: 'Presets', icon: Sparkles, category: 'Presets' as ProductCategory }
+    { label: 'Peripherals', icon: Keyboard, category: 'Peripherals' as ProductCategory },
+    { label: 'Displays', icon: Monitor, category: 'Displays' as ProductCategory },
+    { label: 'Charging', icon: Zap, category: 'Power & Charging' as ProductCategory },
+    { label: 'Home Living', icon: Flame, category: 'Home & Living' as ProductCategory }
   ];
 
   const handleClick = (cat: ProductCategory) => {
     if (onSelectCategory) {
       onSelectCategory(cat);
     } else {
-      if (cat === 'Planners') {
-        setActiveTab('planners');
-      } else {
-        setActiveTab('categories');
-      }
+      setActiveTab('planners');
     }
   };
 

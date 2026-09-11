@@ -76,31 +76,40 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Persistence via localStorage
+  // Persistence via localStorage with clean versioning for hardware catalog
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('pixelnest_products');
-    return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+    const saved = localStorage.getItem('pixelnest_hardware_products_v2');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { }
+    }
+    localStorage.removeItem('pixelnest_products');
+    return INITIAL_PRODUCTS;
   });
 
   const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('pixelnest_orders');
-    return saved ? JSON.parse(saved) : INITIAL_ORDERS;
+    const saved = localStorage.getItem('pixelnest_hardware_orders_v2');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { }
+    }
+    localStorage.removeItem('pixelnest_orders');
+    return INITIAL_ORDERS;
   });
 
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const saved = localStorage.getItem('pixelnest_cart');
+    const saved = localStorage.getItem('pixelnest_hardware_cart_v2');
     if (saved) {
       try { return JSON.parse(saved); } catch (e) { return []; }
     }
-    // Default initial cart matching reference screenshot: Minimal Daily Planner (299) + Social Media Templates (399)
+    localStorage.removeItem('pixelnest_cart');
+    // Default initial cart: Ergonomic Wireless Mouse (1499) + 140W GaN Fast Charger (2899)
     return [
       { product: INITIAL_PRODUCTS[0], quantity: 1 },
-      { product: INITIAL_PRODUCTS[1], quantity: 1 }
+      { product: INITIAL_PRODUCTS[3], quantity: 1 }
     ];
   });
 
   const [wishlist, setWishlist] = useState<string[]>(() => {
-    const saved = localStorage.getItem('pixelnest_wishlist');
+    const saved = localStorage.getItem('pixelnest_hardware_wishlist_v2');
     return saved ? JSON.parse(saved) : ['prod-1', 'prod-3'];
   });
 
@@ -117,25 +126,25 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>('FIRST10');
-  const [discountAmount, setDiscountAmount] = useState<number>(70);
+  const [discountAmount, setDiscountAmount] = useState<number>(440);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   // Sync back to localStorage
   useEffect(() => {
-    localStorage.setItem('pixelnest_products', JSON.stringify(products));
+    localStorage.setItem('pixelnest_hardware_products_v2', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {
-    localStorage.setItem('pixelnest_orders', JSON.stringify(orders));
+    localStorage.setItem('pixelnest_hardware_orders_v2', JSON.stringify(orders));
   }, [orders]);
 
   useEffect(() => {
-    localStorage.setItem('pixelnest_cart', JSON.stringify(cart));
+    localStorage.setItem('pixelnest_hardware_cart_v2', JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    localStorage.setItem('pixelnest_wishlist', JSON.stringify(wishlist));
+    localStorage.setItem('pixelnest_hardware_wishlist_v2', JSON.stringify(wishlist));
   }, [wishlist]);
 
   useEffect(() => {
@@ -322,18 +331,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  // Interactive Digital Download Handler
+  // Interactive Warranty Slip & Guide Download Handler
   const triggerDownload = (product: Product) => {
-    const filename = product.downloadFileName || `${product.title.replace(/\s+/g, '_')}_Digital_Bundle.pdf`;
+    const filename = product.downloadFileName || `${product.title.replace(/\s+/g, '_')}_Warranty_Slip.pdf`;
     
-    // Generate an authentic minimalist aesthetic digital document
+    // Generate an authentic minimalist aesthetic document
     const content = `%PDF-1.4
 %âãÏÓ
 1 0 obj
-<< /Title (${product.title})
-   /Author (PixelNest Digital Goods)
-   /Subject (Digital Planner & Templates)
-   /Creator (PixelNest Headless Shopify Experience)
+<< /Title (${product.title} - Warranty & User Guide)
+   /Author (PixelNest Hardware & Gear)
+   /Subject (Hardware Official Warranty & Specs)
+   /Creator (PixelNest Headless Commerce)
 >>
 endobj
 2 0 obj
@@ -346,21 +355,23 @@ endobj
 << /Type /Page /Parent 3 0 R /MediaBox [0 0 595 842] /Contents 5 0 R >>
 endobj
 5 0 obj
-<< /Length 280 >>
+<< /Length 320 >>
 stream
 BT
-/Helvetica-Bold 24 Tf
+/Helvetica-Bold 22 Tf
 50 780 Td
-(PixelNest - ${product.title}) Tj
+(PIXELNEST HARDWARE - OFFICIAL WARRANTY SLIP) Tj
 /Helvetica 14 Tf
-0 -40 Td
-(Thank you for your purchase! Here is your official digital download bundle.) Tj
-0 -30 Td
-(Order License: Personal & Commercial Printable Use) Tj
-0 -25 Td
-(Features included: Instant Printable, GoodNotes Ready, Notion Compatible) Tj
-0 -35 Td
-(Good things take time. Plan your dreams with PixelNest.) Tj
+0 -36 Td
+(Product: ${product.title}) Tj
+0 -26 Td
+(Warranty Coverage: ${product.warranty || '1 Year Official Replacement'}) Tj
+0 -26 Td
+(Authenticity: 100% Genuine Tested & Certified Hardware) Tj
+0 -32 Td
+(Thank you for choosing PixelNest Hardware. Keep this slip for support.) Tj
+0 -24 Td
+(Customer Service: support@pixelnest.io • WhatsApp: +91 98765 43210) Tj
 ET
 endstream
 endobj

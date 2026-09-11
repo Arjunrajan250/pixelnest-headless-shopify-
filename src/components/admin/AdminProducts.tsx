@@ -15,36 +15,39 @@ export const AdminProducts: React.FC = () => {
   // Form states
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
-  const [category, setCategory] = useState<ProductCategory>('Planners');
-  const [subCategory, setSubCategory] = useState('Daily');
-  const [price, setPrice] = useState('299');
-  const [comparePrice, setComparePrice] = useState('499');
+  const [category, setCategory] = useState<ProductCategory>('Peripherals');
+  const [subCategory, setSubCategory] = useState('Mice');
+  const [price, setPrice] = useState('1499');
+  const [comparePrice, setComparePrice] = useState('2499');
   const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('/images/planner.jpg');
-  const [features, setFeatures] = useState('Instant Download (PDF)\nPrintable & Digital Use\nA4, A5, US Letter Sizes\nGoodNotes & Notability Ready');
-  const [downloadFileName, setDownloadFileName] = useState('Digital_Planner_Bundle.pdf');
+  const [imageUrl, setImageUrl] = useState('/images/mouse.jpg');
+  const [features, setFeatures] = useState('Free 2-Day Express Shipping\n1-Year Official Warranty\nTested & Certified Build Quality\n7-Day Replacement Guarantee');
+  const [downloadFileName, setDownloadFileName] = useState('Product_Warranty_Guide.pdf');
   const [status, setStatus] = useState<'active' | 'draft'>('active');
 
   const presetImages = [
-    { label: 'Minimal Planner', url: '/images/planner.jpg' },
-    { label: 'Wellness Journal', url: '/images/wellness_planner.jpg' },
-    { label: 'Social Templates', url: '/images/templates.jpg' },
-    { label: 'Self Care Guide', url: '/images/ebook_cover.jpg' },
-    { label: 'Lifestyle Desk', url: '/images/quote_banner.jpg' },
-    { label: 'Cozy Morning', url: '/images/hero.jpg' }
+    { label: 'Wireless Mouse', url: '/images/mouse.jpg' },
+    { label: 'Mechanical Keyboard', url: '/images/keyboard.jpg' },
+    { label: '4K Curved Monitor', url: '/images/monitor.jpg' },
+    { label: 'GaN Multi-Charger', url: '/images/charger.jpg' },
+    { label: 'Retro Lava Lamp', url: '/images/lava_lamp.jpg' },
+    { label: 'Magnetic Hooks', url: '/images/kitchen_hooks.jpg' },
+    { label: 'Monitor Arm', url: '/images/monitor_arm.jpg' },
+    { label: 'Screen Light Bar', url: '/images/lightbar.jpg' },
+    { label: 'Desk Setup Hero', url: '/images/hardware_hero.jpg' }
   ];
 
   const resetForm = () => {
     setTitle('');
     setSubtitle('');
-    setCategory('Planners');
-    setSubCategory('Daily');
-    setPrice('299');
-    setComparePrice('499');
+    setCategory('Peripherals');
+    setSubCategory('Mice');
+    setPrice('1499');
+    setComparePrice('2499');
     setDescription('');
-    setImageUrl('/images/planner.jpg');
-    setFeatures('Instant Download (PDF)\nPrintable & Digital Use\nA4, A5, US Letter Sizes\nGoodNotes & Notability Ready');
-    setDownloadFileName('Digital_Planner_Bundle.pdf');
+    setImageUrl('/images/mouse.jpg');
+    setFeatures('Free 2-Day Express Shipping\n1-Year Official Warranty\nTested & Certified Build Quality\n7-Day Replacement Guarantee');
+    setDownloadFileName('Product_Warranty_Guide.pdf');
     setStatus('active');
     setEditingProduct(null);
   };
@@ -309,11 +312,11 @@ export const AdminProducts: React.FC = () => {
                     value={category}
                     onChange={e => setCategory(e.target.value as ProductCategory)}
                   >
-                    <option value="Planners">Planners</option>
-                    <option value="Ebooks">Ebooks</option>
-                    <option value="Templates">Templates</option>
-                    <option value="Presets">Presets</option>
-                    <option value="Courses">Courses</option>
+                    <option value="Peripherals">Peripherals</option>
+                    <option value="Displays">Displays</option>
+                    <option value="Power & Charging">Power & Charging</option>
+                    <option value="Home & Living">Home & Living</option>
+                    <option value="Desk Setup">Desk Setup</option>
                     <option value="Others">Others</option>
                   </select>
                 </div>

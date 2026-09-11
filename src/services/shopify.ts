@@ -155,19 +155,21 @@ export async function fetchShopifyProducts(config: ShopifyConfig): Promise<{ suc
       const price = parseFloat(variant?.price?.amount || '299');
       const comparePrice = variant?.compareAtPrice ? parseFloat(variant.compareAtPrice.amount) : undefined;
 
-      let category: Product['category'] = 'Planners';
+      let category: Product['category'] = 'Peripherals';
       const type = (node.productType || '').toLowerCase();
-      if (type.includes('ebook')) category = 'Ebooks';
-      else if (type.includes('template')) category = 'Templates';
-      else if (type.includes('preset')) category = 'Presets';
-      else if (type.includes('course')) category = 'Courses';
+      if (type.includes('display') || type.includes('monitor') || type.includes('screen')) category = 'Displays';
+      else if (type.includes('charge') || type.includes('power') || type.includes('cable')) category = 'Power & Charging';
+      else if (type.includes('home') || type.includes('lamp') || type.includes('hook') || type.includes('living')) category = 'Home & Living';
+      else if (type.includes('desk') || type.includes('mount') || type.includes('light')) category = 'Desk Setup';
+      else if (type.includes('mouse') || type.includes('keyboard') || type.includes('peripheral')) category = 'Peripherals';
+      else category = 'Others';
 
       return {
         id: node.id,
         title: node.title,
         handle: node.handle,
         description: node.description,
-        subtitle: 'Digital Product from Shopify Store',
+        subtitle: 'Hardware Gear from Shopify Store',
         category,
         price,
         compareAtPrice: comparePrice,

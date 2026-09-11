@@ -1,4 +1,4 @@
-export type ProductCategory = 'Planners' | 'Ebooks' | 'Templates' | 'Presets' | 'Courses' | 'Others';
+export type ProductCategory = 'Peripherals' | 'Displays' | 'Power & Charging' | 'Home & Living' | 'Desk Setup' | 'Others';
 
 export interface Product {
   id: string;
@@ -7,7 +7,7 @@ export interface Product {
   subtitle?: string;
   description: string;
   category: ProductCategory;
-  subCategory?: string; // 'Daily' | 'Weekly' | 'Monthly' etc.
+  subCategory?: string; // 'Mice' | 'Keyboards' | 'Monitors' | 'Chargers' | 'Lighting' | 'Hooks'
   price: number;
   compareAtPrice?: number;
   rating: number;
@@ -15,6 +15,10 @@ export interface Product {
   imageUrl: string;
   gallery: string[];
   features: string[];
+  specs?: Record<string, string>;
+  warranty?: string;
+  shippingInfo?: string;
+  inStock?: boolean;
   status: 'active' | 'draft';
   downloadUrl?: string;
   downloadFileName?: string;

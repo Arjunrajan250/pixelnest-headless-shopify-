@@ -4,6 +4,7 @@ import {
   Settings, 
   ShoppingBag, 
   DownloadCloud, 
+  ShieldCheck,
   Heart, 
   MapPin, 
   HelpCircle, 
@@ -56,8 +57,8 @@ export const ProfileView: React.FC = () => {
           onClick={() => setActiveTab('orders')}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <DownloadCloud size={16} style={{ color: '#4A5B4F' }} />
-            <span>Downloads</span>
+            <ShieldCheck size={16} style={{ color: '#4A5B4F' }} />
+            <span>Warranty Slips & Invoices</span>
           </div>
           <ChevronRight size={16} style={{ color: '#A39D95' }} />
         </div>

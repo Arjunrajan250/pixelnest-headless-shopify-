@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
           <Sparkles size={18} style={{ color: '#4A5B4F' }} />
           PixelNest
         </span>
-        <span className="store-logo-subtitle">Digital products for a better you</span>
+        <span className="store-logo-subtitle">Premium Hardware & Lifestyle Tech</span>
       </div>
 
       <nav className="desktop-header-nav">
@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
           className={`desktop-nav-link ${activeTab === 'planners' ? 'active' : ''}`}
           onClick={() => setActiveTab('planners')}
         >
-          Planners
+          Hardware Gear
         </button>
         <button 
           className={`desktop-nav-link ${activeTab === 'categories' ? 'active' : ''}`}

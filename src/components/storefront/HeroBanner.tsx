@@ -9,25 +9,25 @@ export const HeroBanner: React.FC = () => {
     <section className="hero-banner-section">
       <div className="hero-banner-card">
         <img 
-          src="/images/hero.jpg" 
-          alt="Woman planning in cozy morning sunlight" 
+          src="/images/hardware_hero.jpg" 
+          alt="Modern minimalist aesthetic desk setup with monitor and peripherals" 
           className="hero-banner-img"
         />
         <div className="hero-banner-overlay" />
         <div className="hero-banner-content">
           <h1 className="hero-headline">
-            Dream<br />
-            Plan<br />
-            Achieve
+            Precision<br />
+            Power<br />
+            Aesthetic
           </h1>
           <p className="hero-subtext">
-            Premium digital products to help you create the life you love.
+            High-performance peripherals, desk gear, and home essentials.
           </p>
           <button 
             className="hero-shop-btn"
             onClick={() => setActiveTab('planners')}
           >
-            Shop Now <ArrowRight size={14} />
+            Explore Gear <ArrowRight size={14} />
           </button>
         </div>
       </div>

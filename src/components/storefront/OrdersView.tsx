@@ -94,10 +94,10 @@ export const OrdersView: React.FC = () => {
                     <button 
                       className="order-download-pill-btn"
                       onClick={() => handleDownload(order.orderNumber, item.product.title, item)}
-                      title="Download digital file"
+                      title="Download Warranty & Invoice PDF"
                     >
                       <Download size={12} />
-                      Download
+                      Warranty Slip
                     </button>
                   ) : order.status === 'Processing' ? (
                     <span className="status-badge processing">
