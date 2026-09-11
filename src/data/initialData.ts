@@ -16,8 +16,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     imageUrl: '/images/mouse.jpg',
     gallery: [
       '/images/mouse.jpg',
-      '/images/keyboard.jpg',
-      '/images/hardware_hero.jpg'
+      '/images/mouse_side.jpg',
+      '/images/mouse_desk.jpg'
     ],
     features: [
       'Whisper-Quiet Silent Switches',
@@ -58,8 +58,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     imageUrl: '/images/keyboard.jpg',
     gallery: [
       '/images/keyboard.jpg',
-      '/images/mouse.jpg',
-      '/images/hardware_hero.jpg'
+      '/images/keyboard_detail.jpg',
+      '/images/keyboard_overhead.jpg'
     ],
     features: [
       'Hot-Swappable 5-Pin Sockets',
@@ -99,9 +99,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 2150,
     imageUrl: '/images/monitor.jpg',
     gallery: [
-      '/images/monitor.jpg',
-      '/images/monitor_arm.jpg',
-      '/images/hardware_hero.jpg'
+      '/images/monitor.jpg'
     ],
     features: [
       '34-inch 1500R Immersive Curve',
@@ -141,8 +139,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 5210,
     imageUrl: '/images/charger.jpg',
     gallery: [
-      '/images/charger.jpg',
-      '/images/cable_organizer.jpg'
+      '/images/charger.jpg'
     ],
     features: [
       '140W Max Power Delivery 3.1',
@@ -182,8 +179,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 1980,
     imageUrl: '/images/lava_lamp.jpg',
     gallery: [
-      '/images/lava_lamp.jpg',
-      '/images/hardware_hero.jpg'
+      '/images/lava_lamp.jpg'
     ],
     features: [
       'Hypnotic Soothing Motion Fluid',
@@ -263,8 +259,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 1650,
     imageUrl: '/images/monitor_arm.jpg',
     gallery: [
-      '/images/monitor_arm.jpg',
-      '/images/monitor.jpg'
+      '/images/monitor_arm.jpg'
     ],
     features: [
       'Smooth Counterbalanced Gas Spring',
@@ -304,8 +299,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 4120,
     imageUrl: '/images/lightbar.jpg',
     gallery: [
-      '/images/lightbar.jpg',
-      '/images/monitor.jpg'
+      '/images/lightbar.jpg'
     ],
     features: [
       'Asymmetric Anti-Screen Glare Optics',
@@ -345,8 +339,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewsCount: 3820,
     imageUrl: '/images/cable_organizer.jpg',
     gallery: [
-      '/images/cable_organizer.jpg',
-      '/images/charger.jpg'
+      '/images/cable_organizer.jpg'
     ],
     features: [
       '5 Magnetic Universal Cable Collars',

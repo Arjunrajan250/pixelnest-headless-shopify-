@@ -26,14 +26,19 @@ export const AdminProducts: React.FC = () => {
   const [status, setStatus] = useState<'active' | 'draft'>('active');
 
   const presetImages = [
-    { label: 'Wireless Mouse', url: '/images/mouse.jpg' },
-    { label: 'Mechanical Keyboard', url: '/images/keyboard.jpg' },
+    { label: 'Mechanical Keyboard (Main)', url: '/images/keyboard.jpg' },
+    { label: 'Mechanical Keyboard (Switches Macro)', url: '/images/keyboard_detail.jpg' },
+    { label: 'Mechanical Keyboard (Overhead Desk)', url: '/images/keyboard_overhead.jpg' },
+    { label: 'Wireless Mouse (Main)', url: '/images/mouse.jpg' },
+    { label: 'Wireless Mouse (Side Ergonomic)', url: '/images/mouse_side.jpg' },
+    { label: 'Wireless Mouse (Desk Workspace)', url: '/images/mouse_desk.jpg' },
     { label: '4K Curved Monitor', url: '/images/monitor.jpg' },
     { label: 'GaN Multi-Charger', url: '/images/charger.jpg' },
     { label: 'Retro Lava Lamp', url: '/images/lava_lamp.jpg' },
     { label: 'Magnetic Hooks', url: '/images/kitchen_hooks.jpg' },
     { label: 'Monitor Arm', url: '/images/monitor_arm.jpg' },
     { label: 'Screen Light Bar', url: '/images/lightbar.jpg' },
+    { label: 'Cable Organizer', url: '/images/cable_organizer.jpg' },
     { label: 'Desk Setup Hero', url: '/images/hardware_hero.jpg' }
   ];
 
@@ -95,7 +100,7 @@ export const AdminProducts: React.FC = () => {
         compareAtPrice: parsedCompare,
         description,
         imageUrl,
-        gallery: [imageUrl, '/images/planner.jpg'],
+        gallery: [imageUrl],
         features: featureList,
         downloadFileName,
         status
@@ -113,7 +118,7 @@ export const AdminProducts: React.FC = () => {
         reviewsCount: 1,
         description,
         imageUrl,
-        gallery: [imageUrl, '/images/planner.jpg'],
+        gallery: [imageUrl],
         features: featureList,
         downloadFileName,
         fileSize: '4.5 MB',

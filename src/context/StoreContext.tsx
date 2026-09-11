@@ -78,7 +78,8 @@ export const StoreContext = createContext<StoreContextType | undefined>(undefine
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Persistence via localStorage with clean versioning for hardware catalog
   const [products, setProducts] = useState<Product[]>(() => {
-    const saved = localStorage.getItem('pixelnest_hardware_products_v2');
+    localStorage.removeItem('pixelnest_hardware_products_v2');
+    const saved = localStorage.getItem('pixelnest_hardware_products_v3');
     if (saved) {
       try { return JSON.parse(saved); } catch (e) { }
     }
@@ -132,7 +133,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Sync back to localStorage
   useEffect(() => {
-    localStorage.setItem('pixelnest_hardware_products_v2', JSON.stringify(products));
+    localStorage.setItem('pixelnest_hardware_products_v3', JSON.stringify(products));
   }, [products]);
 
   useEffect(() => {

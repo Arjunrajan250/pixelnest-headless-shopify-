@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { 
   ArrowLeft, 
@@ -26,6 +26,11 @@ export const ProductDetailModal: React.FC = () => {
 
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [addedAnimation, setAddedAnimation] = useState<boolean>(false);
+
+  // Reset active image index when selected product changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [selectedProduct?.id]);
 
   if (!selectedProduct) return null;
 
@@ -70,7 +75,7 @@ export const ProductDetailModal: React.FC = () => {
             setSelectedProduct(null);
             setActiveTab('home');
           }}
-          title="Back"
+          title="Back to Storefront"
         >
           <ArrowLeft size={18} />
         </button>
@@ -99,35 +104,47 @@ export const ProductDetailModal: React.FC = () => {
         </div>
       </div>
 
-      {/* Gallery */}
-      <div className="detail-gallery-main">
-        <img 
-          src={images[activeImageIndex]} 
-          alt={selectedProduct.title}
-          className="detail-main-img"
-        />
-        {selectedProduct.category && (
-          <span className="detail-category-badge">{selectedProduct.category}</span>
-        )}
-      </div>
+      {/* Main Responsive Grid: Media Column & Info Column */}
+      <div className="detail-main-grid">
+        <div className="detail-media-column">
+          {/* Gallery Main */}
+          <div className="detail-gallery-main">
+            <img 
+              src={images[activeImageIndex] || selectedProduct.imageUrl} 
+              alt={selectedProduct.title}
+              className="detail-main-img"
+            />
+            {selectedProduct.category && (
+              <span className="detail-category-badge">{selectedProduct.category}</span>
+            )}
+            {images.length > 1 && (
+              <span className="detail-gallery-counter">
+                {activeImageIndex + 1} / {images.length}
+              </span>
+            )}
+          </div>
 
-      {images.length > 1 && (
-        <div className="detail-thumbnails-row">
-          {images.map((imgUrl, idx) => (
-            <button
-              key={idx}
-              className={`detail-thumb-btn ${idx === activeImageIndex ? 'active' : ''}`}
-              onClick={() => setActiveImageIndex(idx)}
-            >
-              <img src={imgUrl} alt={`Thumbnail ${idx + 1}`} />
-            </button>
-          ))}
+          {/* Thumbnails Row */}
+          {images.length > 1 && (
+            <div className="detail-thumbnails-row">
+              {images.map((imgUrl, idx) => (
+                <button
+                  key={idx}
+                  className={`detail-thumb-btn ${idx === activeImageIndex ? 'active' : ''}`}
+                  onClick={() => setActiveImageIndex(idx)}
+                  title={`View image ${idx + 1}`}
+                >
+                  <img src={imgUrl} alt={`${selectedProduct.title} view ${idx + 1}`} />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Info Content */}
-      <div className="detail-info-content">
-        <h1 className="detail-title">{selectedProduct.title}</h1>
+        <div className="detail-info-column">
+          {/* Info Content */}
+          <div className="detail-info-content">
+            <h1 className="detail-title">{selectedProduct.title}</h1>
         {selectedProduct.subtitle && (
           <p className="detail-subtitle">{selectedProduct.subtitle}</p>
         )}
@@ -206,24 +223,26 @@ export const ProductDetailModal: React.FC = () => {
         <h3 className="detail-section-title">About this product</h3>
         <p className="detail-desc-text">{selectedProduct.description}</p>
       </div>
-
-      <div className="detail-sticky-cta">
-        <button 
-          className="primary-pill-btn"
-          onClick={handleAddToCart}
-          disabled={addedAnimation}
-        >
-          {addedAnimation ? (
-            <>
-              <Check size={18} /> Added to Cart!
-            </>
-          ) : (
-            <>
-              <ShoppingBag size={18} /> Add to Cart • ₹{selectedProduct.price}
-            </>
-          )}
-        </button>
-      </div>
     </div>
+  </div>
+
+  <div className="detail-sticky-cta">
+    <button 
+      className="primary-pill-btn"
+      onClick={handleAddToCart}
+      disabled={addedAnimation}
+    >
+      {addedAnimation ? (
+        <>
+          <Check size={18} /> Added to Cart!
+        </>
+      ) : (
+        <>
+          <ShoppingBag size={18} /> Add to Cart • ₹{selectedProduct.price}
+        </>
+      )}
+    </button>
+  </div>
+</div>
   );
 };
