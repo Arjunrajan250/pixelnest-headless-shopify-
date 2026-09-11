@@ -13,7 +13,7 @@ import {
 import { INITIAL_PRODUCTS, INITIAL_ORDERS, INITIAL_SHOPIFY_CONFIG } from '../data/initialData';
 import { fetchShopifyProducts } from '../services/shopify';
 
-interface StoreContextType {
+export interface StoreContextType {
   products: Product[];
   orders: Order[];
   cart: CartItem[];
@@ -73,7 +73,7 @@ interface StoreContextType {
   triggerDownload: (product: Product) => void;
 }
 
-const StoreContext = createContext<StoreContextType | undefined>(undefined);
+export const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Persistence via localStorage with clean versioning for hardware catalog
@@ -448,10 +448,4 @@ startxref
   );
 };
 
-export const useStore = () => {
-  const context = useContext(StoreContext);
-  if (!context) {
-    throw new Error('useStore must be used within a StoreProvider');
-  }
-  return context;
-};
+export { useStore } from './useStore';
