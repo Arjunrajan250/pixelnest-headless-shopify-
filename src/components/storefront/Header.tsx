@@ -20,6 +20,39 @@ export const Header: React.FC = () => {
         <span className="store-logo-subtitle">Digital products for a better you</span>
       </div>
 
+      <nav className="desktop-header-nav">
+        <button 
+          className={`desktop-nav-link ${activeTab === 'home' ? 'active' : ''}`}
+          onClick={() => setActiveTab('home')}
+        >
+          Home
+        </button>
+        <button 
+          className={`desktop-nav-link ${activeTab === 'planners' ? 'active' : ''}`}
+          onClick={() => setActiveTab('planners')}
+        >
+          Planners
+        </button>
+        <button 
+          className={`desktop-nav-link ${activeTab === 'categories' ? 'active' : ''}`}
+          onClick={() => setActiveTab('categories')}
+        >
+          Categories
+        </button>
+        <button 
+          className={`desktop-nav-link ${activeTab === 'orders' ? 'active' : ''}`}
+          onClick={() => setActiveTab('orders')}
+        >
+          Orders
+        </button>
+        <button 
+          className={`desktop-nav-link ${activeTab === 'profile' ? 'active' : ''}`}
+          onClick={() => setActiveTab('profile')}
+        >
+          Profile
+        </button>
+      </nav>
+
       <div className="header-action-group">
         <button 
           className="icon-btn-pill" 
