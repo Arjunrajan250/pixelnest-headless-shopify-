@@ -2,6 +2,7 @@ import React from 'react';
 import { Product } from '../../types';
 import { useStore } from '../../context/StoreContext';
 import { Star, ShoppingBag, Heart } from 'lucide-react';
+import { formatPrice } from '../../utils/currency';
 
 interface ProductCardProps {
   product: Product;
@@ -9,7 +10,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenDetail }) => {
-  const { addToCart, wishlist, toggleWishlist, setSelectedProduct, setActiveTab } = useStore();
+  const { addToCart, wishlist, toggleWishlist, setSelectedProduct, setActiveTab, currency } = useStore();
   const isWishlisted = wishlist.includes(product.id);
 
   const discountPercent = product.compareAtPrice && product.compareAtPrice > product.price
@@ -41,10 +42,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenDetail 
         <img src={product.imageUrl} alt={product.title} loading="lazy" />
         
         {discountPercent && (
-          <span className="discount-tag-badge">{discountPercent}% OFF</span>
+          <span className="discount-tag-badge">Save {discountPercent}%</span>
         )}
 
         <button 
+          type="button"
           className={`wishlist-heart-btn ${isWishlisted ? 'active' : ''}`}
           onClick={handleWishlist}
           title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
@@ -58,18 +60,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenDetail 
         
         <div className="card-rating-row">
           <Star size={12} className="rating-star" />
-          <span>{product.rating} ({product.reviewsCount > 999 ? `${(product.reviewsCount / 1000).toFixed(1)}k` : product.reviewsCount})</span>
+          <span>{product.rating} ({product.reviewsCount})</span>
         </div>
 
         <div className="card-pricing-row">
           <div>
-            <span className="card-price-current">₹{product.price}</span>
-            {product.compareAtPrice && (
-              <span className="card-price-compare">₹{product.compareAtPrice}</span>
+            <span className="card-price-current">{formatPrice(product.price, currency)}</span>
+            {product.compareAtPrice && product.compareAtPrice > product.price && (
+              <span className="card-price-compare">{formatPrice(product.compareAtPrice, currency)}</span>
             )}
           </div>
 
           <button 
+            type="button"
             className="card-cart-btn" 
             title="Add to cart"
             onClick={handleAddToCart}
@@ -81,3 +84,4 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onOpenDetail 
     </div>
   );
 };
+

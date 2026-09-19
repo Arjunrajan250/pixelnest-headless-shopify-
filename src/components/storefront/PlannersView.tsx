@@ -16,6 +16,7 @@ export const PlannersView: React.FC = () => {
     <div className="collection-view-wrapper">
       <div className="storefront-header">
         <button 
+          type="button"
           className="icon-btn-pill" 
           onClick={() => setActiveTab('home')}
           title="Back"
@@ -23,33 +24,29 @@ export const PlannersView: React.FC = () => {
           <ArrowLeft size={18} />
         </button>
         <span style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 700 }}>
-          Hardware & Gear
+          Shop All Products
         </span>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
+            type="button"
             className="icon-btn-pill" 
             onClick={() => setIsSearchOpen(true)}
             title="Search"
           >
             <Search size={18} />
           </button>
-          <button 
-            className="icon-btn-pill" 
-            title="Filter options"
-          >
-            <SlidersHorizontal size={18} />
-          </button>
         </div>
       </div>
 
       <div className="collection-header-box">
-        <h2 className="collection-title">Engineered for performance and comfort.</h2>
-        <p className="collection-desc">Premium peripherals, monitors, fast chargers, and lifestyle desk gear.</p>
+        <h2 className="collection-title">Smart products engineered for everyday life.</h2>
+        <p className="collection-desc">Precision peripherals, ultra-fast GaN charging, ergonomic monitor setups, and functional lifestyle tools.</p>
       </div>
 
       <div className="filter-pills-row">
         {(['All', 'Mice', 'Keyboards', 'Monitors', 'Chargers', 'Lighting', 'Hooks'] as const).map(cat => (
           <button
+            type="button"
             key={cat}
             className={`filter-pill ${filterSubCat === cat ? 'active' : ''}`}
             onClick={() => setFilterSubCat(cat)}
@@ -67,3 +64,4 @@ export const PlannersView: React.FC = () => {
     </div>
   );
 };
+

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { Order, OrderStatus } from '../../types';
-import { Search, Eye, Download, CheckCircle2, Clock, XCircle, X, Printer, Send } from 'lucide-react';
+import { Search, Download, Eye, Send, X, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { formatPrice } from '../../utils/currency';
 
 export const AdminOrders: React.FC = () => {
-  const { orders, updateOrderStatus, triggerDownload } = useStore();
+  const { orders, updateOrderStatus, triggerDownload, currency } = useStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | OrderStatus>('All');
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -122,10 +123,10 @@ export const AdminOrders: React.FC = () => {
                     </div>
                   </td>
                   <td style={{ fontWeight: 700 }}>
-                    <div>₹{order.total}</div>
+                    <div>{formatPrice(order.total, order.currency || currency)}</div>
                     {order.discount > 0 && (
                       <div style={{ fontSize: '10px', color: '#2F7A4C' }}>
-                        -{order.discount} ({order.discountCode || 'Promo'})
+                        -{formatPrice(order.discount, order.currency || currency)} ({order.discountCode || 'Promo'})
                       </div>
                     )}
                   </td>
@@ -215,9 +216,9 @@ export const AdminOrders: React.FC = () => {
 
                 <div className="mobile-order-card-bottom">
                   <div>
-                    <div className="mobile-order-price">₹{order.total.toLocaleString()}</div>
+                    <div className="mobile-order-price">{formatPrice(order.total, order.currency || currency)}</div>
                     {order.discount > 0 && (
-                      <span className="order-discount-pill">₹{order.discount} off</span>
+                      <span className="order-discount-pill">-{formatPrice(order.discount, order.currency || currency)}</span>
                     )}
                   </div>
                   <button 
@@ -274,7 +275,7 @@ export const AdminOrders: React.FC = () => {
             </div>
 
             <div style={{ marginBottom: '16px' }}>
-              <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px' }}>PURCHASED DIGITAL ASSETS</div>
+              <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '8px' }}>ORDER ITEMS & HARDWARE</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {selectedOrder.items.map((it, idx) => (
                   <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px', background: '#F8F5F0', borderRadius: '6px' }}>
@@ -283,16 +284,16 @@ export const AdminOrders: React.FC = () => {
                       <div>
                         <div style={{ fontWeight: 600, fontSize: '13px' }}>{it.product.title}</div>
                         <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
-                          Qty: {it.quantity} • File: {it.product.downloadFileName || 'Bundle.pdf'}
+                          Qty: {it.quantity} • {formatPrice(it.product.price * it.quantity, selectedOrder.currency || currency)}
                         </div>
                       </div>
                     </div>
                     <button 
                       className="order-download-pill-btn"
                       onClick={() => triggerDownload(it.product)}
-                      title="Test file download"
+                      title="Generate warranty slip"
                     >
-                      <Download size={12} /> Download
+                      <Download size={12} /> Warranty Slip
                     </button>
                   </div>
                 ))}
@@ -302,17 +303,17 @@ export const AdminOrders: React.FC = () => {
             <div style={{ background: '#FAF7F2', padding: '12px', borderRadius: 'var(--radius-sm)', marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
                 <span>Subtotal</span>
-                <span>₹{selectedOrder.subtotal}</span>
+                <span>{formatPrice(selectedOrder.subtotal, selectedOrder.currency || currency)}</span>
               </div>
               {selectedOrder.discount > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#2F7A4C', marginBottom: '4px' }}>
                   <span>Discount ({selectedOrder.discountCode || 'Promo'})</span>
-                  <span>- ₹{selectedOrder.discount}</span>
+                  <span>- {formatPrice(selectedOrder.discount, selectedOrder.currency || currency)}</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 700, borderTop: '1px solid var(--border-light)', paddingTop: '6px', marginTop: '4px' }}>
                 <span>Total Paid</span>
-                <span>₹{selectedOrder.total}</span>
+                <span>{formatPrice(selectedOrder.total, selectedOrder.currency || currency)}</span>
               </div>
             </div>
 

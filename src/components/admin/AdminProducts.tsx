@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { Product, ProductCategory } from '../../types';
-import { Plus, Search, Edit2, Trash2, ExternalLink, X, Check, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit2, Trash2, ExternalLink, X, Check } from 'lucide-react';
+import { formatPrice } from '../../utils/currency';
 
 export const AdminProducts: React.FC = () => {
-  const { products, addProduct, updateProduct, deleteProduct, setSelectedProduct, setActiveTab, setAppMode } = useStore();
+  const { products, addProduct, updateProduct, deleteProduct, setSelectedProduct, setActiveTab, setAppMode, currency } = useStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCat, setSelectedCat] = useState<string>('All');
   
@@ -264,9 +265,9 @@ export const AdminProducts: React.FC = () => {
                       {prod.category}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 700 }}>₹{prod.price}</td>
+                  <td style={{ fontWeight: 700 }}>{formatPrice(prod.price, currency)}</td>
                   <td style={{ color: 'var(--text-muted)' }}>
-                    {prod.compareAtPrice ? `₹${prod.compareAtPrice}` : '—'}
+                    {prod.compareAtPrice ? formatPrice(prod.compareAtPrice, currency) : '—'}
                   </td>
                   <td>
                     <span className={`status-badge ${prod.status}`}>
@@ -342,9 +343,9 @@ export const AdminProducts: React.FC = () => {
 
                 <div className="mobile-product-card-mid">
                   <div className="mobile-product-price-block">
-                    <span className="mobile-product-price">₹{prod.price}</span>
+                    <span className="mobile-product-price">{formatPrice(prod.price, currency)}</span>
                     {prod.compareAtPrice && (
-                      <span className="mobile-product-compare">₹{prod.compareAtPrice}</span>
+                      <span className="mobile-product-compare">{formatPrice(prod.compareAtPrice, currency)}</span>
                     )}
                   </div>
                   <div className="mobile-product-actions">
@@ -469,23 +470,25 @@ export const AdminProducts: React.FC = () => {
 
               <div className="form-grid-2">
                 <div className="form-group">
-                  <label className="form-label">Price (₹) *</label>
+                  <label className="form-label">Price ($ USD base) *</label>
                   <input 
                     type="number" 
+                    step="0.01"
                     className="form-control" 
                     value={price}
                     onChange={e => setPrice(e.target.value)}
-                    placeholder="e.g. 2999"
+                    placeholder="e.g. 29.99"
                     required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Compare-at Price / Original MRP (₹)</label>
+                  <label className="form-label">Compare-at Price ($ USD base)</label>
                   <input 
                     type="number" 
+                    step="0.01"
                     className="form-control" 
-                    placeholder="e.g. 4499 (shows discount badge)" 
+                    placeholder="e.g. 34.99 (shows discount badge)" 
                     value={comparePrice}
                     onChange={e => setComparePrice(e.target.value)}
                   />

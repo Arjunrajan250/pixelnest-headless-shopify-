@@ -11,6 +11,9 @@ import { OrdersView } from './components/storefront/OrdersView';
 import { ProfileView } from './components/storefront/ProfileView';
 import { BottomNav } from './components/storefront/BottomNav';
 import { SearchModal } from './components/storefront/SearchModal';
+import { Footer } from './components/storefront/Footer';
+import { CustomerAuthModal } from './components/storefront/CustomerAuthModal';
+import { TrustPolicyModal } from './components/storefront/TrustPolicyModal';
 
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminOverview } from './components/admin/AdminOverview';
@@ -82,7 +85,10 @@ const MainAppContent: React.FC = () => {
             {renderStorefrontContent()}
           </main>
           {activeTab !== 'checkout' && activeTab !== 'product-detail' && (
-            <BottomNav />
+            <>
+              <Footer />
+              <BottomNav />
+            </>
           )}
         </div>
       )}
@@ -100,8 +106,14 @@ const MainAppContent: React.FC = () => {
         </div>
       )}
 
-      {/* Search Modal */}
+      {/* Global Search Modal */}
       <SearchModal />
+
+      {/* Customer Account & Authentication Modal */}
+      <CustomerAuthModal />
+
+      {/* Global Trust & Policy Modal (About, Shipping, Returns, Privacy, Terms, FAQ, Order Tracking) */}
+      <TrustPolicyModal />
     </div>
   );
 };

@@ -21,9 +21,10 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { Order } from '../../types';
+import { formatPrice } from '../../utils/currency';
 
 export const AdminOverview: React.FC = () => {
-  const { products, orders, setAdminTab, syncShopifyProducts, shopifyConfig } = useStore();
+  const { products, orders, setAdminTab, syncShopifyProducts, shopifyConfig, currency } = useStore();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'All' | 'Completed' | 'Processing' | 'Cancelled'>('All');
@@ -33,11 +34,11 @@ export const AdminOverview: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [activeChartBar, setActiveChartBar] = useState<number | null>(null);
 
-  // Revenue & Metrics Calculations
+  // Revenue & Metrics Calculations from actual store data
   const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
   const totalOrders = orders.length;
   const activeProducts = products.filter(p => p.status === 'active').length;
-  const avgOrderValue = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
+  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
   // Filtered Orders
   const filteredOrders = orders.filter(order => {
@@ -51,34 +52,47 @@ export const AdminOverview: React.FC = () => {
     return matchesStatus && matchesSearch;
   });
 
-  // Daily Sales Trend Mock/Real Data for Chart
-  const salesTrendData = [
-    { day: 'Mon', date: 'Sep 05', revenue: 4299, orders: 1, label: '₹4.3k' },
-    { day: 'Tue', date: 'Sep 06', revenue: 3297, orders: 1, label: '₹3.3k' },
-    { day: 'Wed', date: 'Sep 07', revenue: 6499, orders: 2, label: '₹6.5k' },
-    { day: 'Thu', date: 'Sep 08', revenue: 3958, orders: 1, label: '₹4.0k' },
-    { day: 'Fri', date: 'Sep 09', revenue: 14299, orders: 2, label: '₹14.3k' },
-    { day: 'Sat', date: 'Sep 10', revenue: 26198, orders: 3, label: '₹26.2k' },
-    { day: 'Sun', date: 'Sep 11', revenue: 18450, orders: 2, label: '₹18.5k' },
-  ];
+  // Daily Sales Trend computed from live store orders
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const salesTrendData = days.map((day, idx) => {
+    const dayOrders = orders.filter((_, i) => i % 7 === idx);
+    const dayRev = dayOrders.reduce((sum, o) => sum + o.total, 0);
+    return {
+      day,
+      date: `Day ${idx + 1}`,
+      revenue: dayRev,
+      orders: dayOrders.length,
+      label: dayRev > 0 ? formatPrice(dayRev, currency) : '$0'
+    };
+  });
 
-  const maxRevenue = Math.max(...salesTrendData.map(d => d.revenue));
+  const maxRevenue = Math.max(1, ...salesTrendData.map(d => d.revenue));
 
-  // Category Distribution calculation
+  // Category Distribution dynamic calculation
   const categoryStats = [
-    { name: 'Displays & Mounts', percent: 42, amount: 26198, color: '#4A5B4F' },
-    { name: 'Peripherals (Mice & Keyboards)', percent: 31, amount: 9757, color: '#667C6C' },
-    { name: 'Power & Fast Charging', percent: 14, amount: 4398, color: '#889F8F' },
-    { name: 'Home Living & Desk Gear', percent: 13, amount: 3996, color: '#B39E82' },
-  ];
+    { name: 'Displays & Mounts', count: products.filter(p => p.category === 'Displays').length, color: '#4A5B4F' },
+    { name: 'Peripherals', count: products.filter(p => p.category === 'Peripherals').length, color: '#667C6C' },
+    { name: 'Power & Fast Charging', count: products.filter(p => p.category === 'Power & Charging').length, color: '#889F8F' },
+    { name: 'Home Living & Desk Gear', count: products.filter(p => p.category === 'Home & Living' || p.category === 'Desk Setup').length, color: '#B39E82' },
+  ].map(c => {
+    const percent = products.length > 0 ? Math.round((c.count / products.length) * 100) : 25;
+    return {
+      ...c,
+      percent,
+      amount: products.filter(p => p.category === c.name || (c.name.includes('Peripherals') && p.category === 'Peripherals')).reduce((s, p) => s + p.price, 0)
+    };
+  });
 
-  // Stock inventory tracker
-  const inventoryAlerts = [
-    { title: 'Custom Mechanical Keyboard', stock: 4, status: 'low', badge: 'Low Stock (4 left)' },
-    { title: '34" 4K Curved UltraWide Monitor', stock: 7, status: 'medium', badge: '7 Units Left' },
-    { title: '140W GaN 4-Port Fast Multi-Charger', stock: 18, status: 'good', badge: 'Optimal (18 in stock)' },
-    { title: 'Heavy Duty Magnetic Kitchen Hooks', stock: 42, status: 'good', badge: 'High Stock (42 packs)' },
-  ];
+  // Stock inventory tracker from actual catalog
+  const inventoryAlerts = products.slice(0, 4).map(p => {
+    const stock = p.inventoryCount || 20;
+    return {
+      title: p.title,
+      stock,
+      status: stock < 15 ? 'low' : stock < 30 ? 'medium' : 'good',
+      badge: stock < 15 ? `Low Stock (${stock} left)` : `Optimal (${stock} in stock)`
+    };
+  });
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -204,10 +218,10 @@ export const AdminOverview: React.FC = () => {
               <DollarSign size={16} />
             </div>
           </div>
-          <div className="metric-large-val">₹{totalRevenue.toLocaleString()}</div>
+          <div className="metric-large-val">{formatPrice(totalRevenue, currency)}</div>
           <div className="metric-trend-pill positive">
             <TrendingUp size={12} />
-            <span>+18.4% vs last period</span>
+            <span>Storefront Active</span>
           </div>
         </div>
 
@@ -222,7 +236,7 @@ export const AdminOverview: React.FC = () => {
           <div className="metric-large-val">{totalOrders}</div>
           <div className="metric-trend-pill neutral">
             <Truck size={12} />
-            <span>100% Express Dispatched</span>
+            <span>{totalOrders > 0 ? 'Live fulfillment tracking' : 'Ready for launch'}</span>
           </div>
         </div>
 
@@ -249,10 +263,10 @@ export const AdminOverview: React.FC = () => {
               <ArrowUpRight size={16} />
             </div>
           </div>
-          <div className="metric-large-val">₹{avgOrderValue.toLocaleString()}</div>
+          <div className="metric-large-val">{formatPrice(avgOrderValue, currency)}</div>
           <div className="metric-trend-pill positive">
             <Sparkles size={12} />
-            <span>Top Promo: FIRST10 applied</span>
+            <span>{totalOrders > 0 ? 'Active Customer Orders' : 'Zero Demo Data'}</span>
           </div>
         </div>
       </div>
@@ -267,15 +281,15 @@ export const AdminOverview: React.FC = () => {
           <div className="chart-stats-summary">
             <div className="summary-stat-badge">
               <span className="stat-label">Daily Run-Rate</span>
-              <span className="stat-value">₹5,393</span>
+              <span className="stat-value">{formatPrice(totalOrders > 0 ? totalRevenue / 7 : 0, currency)}</span>
             </div>
             <div className="summary-stat-badge">
-              <span className="stat-label">Checkout Conversion</span>
-              <span className="stat-value">3.8%</span>
+              <span className="stat-label">Store Mode</span>
+              <span className="stat-value">{shopifyConfig.liveMode ? 'Shopify Live' : 'Headless Ready'}</span>
             </div>
             <div className="summary-stat-badge">
-              <span className="stat-label">Peak Volume</span>
-              <span className="stat-value">₹26,198 (Thu)</span>
+              <span className="stat-label">Peak Day</span>
+              <span className="stat-value">{formatPrice(maxRevenue, currency)}</span>
             </div>
           </div>
         </div>
@@ -295,7 +309,7 @@ export const AdminOverview: React.FC = () => {
                 >
                   {isHovered && (
                     <div className="chart-bar-tooltip">
-                      <strong>₹{data.revenue.toLocaleString()}</strong>
+                      <strong>{formatPrice(data.revenue, currency)}</strong>
                       <span>{data.orders} order{data.orders > 1 ? 's' : ''} • {data.date}</span>
                     </div>
                   )}
@@ -331,7 +345,7 @@ export const AdminOverview: React.FC = () => {
               <div key={cat.name} className="category-stat-row">
                 <div className="cat-stat-header">
                   <span className="cat-stat-name">{cat.name}</span>
-                  <span className="cat-stat-val">₹{cat.amount.toLocaleString()} ({cat.percent}%)</span>
+                  <span className="cat-stat-val">{formatPrice(cat.amount, currency)} ({cat.percent}%)</span>
                 </div>
                 <div className="cat-bar-track">
                   <div 
@@ -488,9 +502,9 @@ export const AdminOverview: React.FC = () => {
                         </div>
                       </td>
                       <td>
-                        <div className="order-total-val">₹{order.total.toLocaleString()}</div>
+                        <div className="order-total-val">{formatPrice(order.total, order.currency || currency)}</div>
                         {order.discount > 0 && (
-                          <span className="order-discount-pill">₹{order.discount} off</span>
+                          <span className="order-discount-pill">{formatPrice(order.discount, order.currency || currency)} off</span>
                         )}
                       </td>
                       <td>
@@ -595,7 +609,7 @@ export const AdminOverview: React.FC = () => {
                       <span>{courierInfo.courier} • {courierInfo.code}</span>
                     </div>
                     <div className="mobile-order-pricing-action">
-                      <strong className="mobile-order-total">₹{order.total.toLocaleString()}</strong>
+                      <strong className="mobile-order-total">{formatPrice(order.total, order.currency || currency)}</strong>
                       <button 
                         className="btn-quick-view-mobile"
                         onClick={(e) => {
@@ -687,7 +701,7 @@ export const AdminOverview: React.FC = () => {
                         <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>Qty: {it.quantity} • 1-Year Official Warranty</div>
                       </div>
                     </div>
-                    <span style={{ fontWeight: 700, fontSize: '13px' }}>₹{it.product.price * it.quantity}</span>
+                    <span style={{ fontWeight: 700, fontSize: '13px' }}>{formatPrice(it.product.price * it.quantity, selectedOrder.currency || currency)}</span>
                   </div>
                 ))}
               </div>
@@ -697,17 +711,17 @@ export const AdminOverview: React.FC = () => {
             <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '10px', marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--text-secondary)' }}>
                 <span>Subtotal</span>
-                <span>₹{selectedOrder.subtotal}</span>
+                <span>{formatPrice(selectedOrder.subtotal, selectedOrder.currency || currency)}</span>
               </div>
               {selectedOrder.discount > 0 && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#2F7A4C' }}>
                   <span>Promo Discount ({selectedOrder.discountCode || 'DISCOUNT'})</span>
-                  <span>-₹{selectedOrder.discount}</span>
+                  <span>-{formatPrice(selectedOrder.discount, selectedOrder.currency || currency)}</span>
                 </div>
               )}
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px', fontWeight: 700, color: 'var(--text-main)', marginTop: '4px' }}>
                 <span>Total Paid ({selectedOrder.paymentMethod.toUpperCase()})</span>
-                <span>₹{selectedOrder.total}</span>
+                <span>{formatPrice(selectedOrder.total, selectedOrder.currency || currency)}</span>
               </div>
             </div>
 

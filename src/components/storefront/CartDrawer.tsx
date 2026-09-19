@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { ArrowLeft, Trash2, Plus, Minus, Tag, Check, ArrowRight } from 'lucide-react';
+import { formatPrice } from '../../utils/currency';
 
 export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> = ({ isModal, onClose }) => {
   const { 
@@ -13,7 +14,8 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
     applyCoupon, 
     removeCoupon,
     setActiveTab,
-    setIsCartOpen 
+    setIsCartOpen,
+    currency
   } = useStore();
 
   const [couponCode, setCouponCode] = useState<string>('');
@@ -27,7 +29,7 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
     if (!couponCode) return;
     const ok = applyCoupon(couponCode);
     if (ok) {
-      setCouponMessage('Coupon applied successfully!');
+      setCouponMessage('Coupon applied successfully (10% off)!');
       setCouponCode('');
     } else {
       setCouponMessage('Invalid code. Try "FIRST10"');
@@ -54,7 +56,7 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
     return (
       <div className="cart-view-wrapper" style={{ padding: '24px 20px', textAlign: 'center' }}>
         <div className="cart-header-bar">
-          <button className="icon-btn-pill" onClick={handleBack} title="Back">
+          <button type="button" className="icon-btn-pill" onClick={handleBack} title="Back">
             <ArrowLeft size={18} />
           </button>
           <span style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 700 }}>
@@ -67,9 +69,10 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>🛍️</div>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '20px', marginBottom: '8px' }}>Your cart is empty</h3>
           <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '24px' }}>
-            Discover our collection of digital planners and creative templates.
+            Explore our curated collection of smart everyday tools and ergonomic gear.
           </p>
           <button 
+            type="button"
             className="primary-pill-btn"
             style={{ maxWidth: '240px', margin: '0 auto' }}
             onClick={() => {
@@ -77,7 +80,7 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
               setActiveTab('planners');
             }}
           >
-            Explore Planners
+            Explore Everyday Gear
           </button>
         </div>
       </div>
@@ -87,13 +90,14 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
   return (
     <div className="cart-view-wrapper" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div className="cart-header-bar">
-        <button className="icon-btn-pill" onClick={handleBack} title="Back">
+        <button type="button" className="icon-btn-pill" onClick={handleBack} title="Back">
           <ArrowLeft size={18} />
         </button>
         <span style={{ fontFamily: 'var(--font-serif)', fontSize: '18px', fontWeight: 700 }}>
-          Your Cart
+          Your Cart ({cart.reduce((s, i) => s + i.quantity, 0)})
         </span>
         <button 
+          type="button"
           className="icon-btn-pill" 
           onClick={clearCart} 
           title="Clear Cart"
@@ -105,28 +109,35 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
 
       <div className="cart-items-list custom-scrollbar">
         {cart.map(item => (
-          <div key={item.product.id} className="cart-item-card">
+          <div key={`${item.product.id}-${item.selectedVariant?.id || 'default'}`} className="cart-item-card">
             <div className="cart-item-thumb">
               <img src={item.product.imageUrl} alt={item.product.title} />
             </div>
 
             <div className="cart-item-info">
               <h4 className="cart-item-title">{item.product.title}</h4>
-              <div className="cart-item-price">₹{item.product.price}</div>
+              {item.selectedVariant && (
+                <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+                  Option: {item.selectedVariant.title}
+                </div>
+              )}
+              <div className="cart-item-price">{formatPrice(item.product.price, currency)}</div>
             </div>
 
             <div className="cart-stepper">
               <button 
+                type="button"
                 className="stepper-btn"
-                onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.selectedVariant?.id)}
                 title="Decrease"
               >
                 <Minus size={12} />
               </button>
-              <span className="stepper-qty">{item.quantity}</span>
+              <span className="stepper-val">{item.quantity}</span>
               <button 
+                type="button"
                 className="stepper-btn"
-                onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.selectedVariant?.id)}
                 title="Increase"
               >
                 <Plus size={12} />
@@ -134,8 +145,9 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
             </div>
 
             <button 
+              type="button"
               className="cart-item-delete"
-              onClick={() => removeFromCart(item.product.id)}
+              onClick={() => removeFromCart(item.product.id, item.selectedVariant?.id)}
               title="Remove item"
             >
               <Trash2 size={16} />
@@ -162,7 +174,7 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
         {appliedCoupon && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#2F7A4C', marginBottom: '10px' }}>
             <span><Tag size={12} style={{ display: 'inline', marginRight: '4px' }} /> Coupon <strong>{appliedCoupon}</strong> active</span>
-            <button type="button" onClick={removeCoupon} style={{ textDecoration: 'underline', color: '#C24134' }}>Remove</button>
+            <button type="button" onClick={removeCoupon} style={{ textDecoration: 'underline', color: '#C24134', background: 'none', border: 'none', cursor: 'pointer' }}>Remove</button>
           </div>
         )}
 
@@ -175,22 +187,23 @@ export const CartDrawer: React.FC<{ isModal?: boolean; onClose?: () => void }> =
         {/* Breakdown */}
         <div className="summary-row">
           <span>Subtotal</span>
-          <span>₹{subtotal}</span>
+          <span>{formatPrice(subtotal, currency)}</span>
         </div>
 
         {discountAmount > 0 && (
           <div className="summary-row discount">
             <span>Discount ({appliedCoupon || 'Special'})</span>
-            <span>- ₹{discountAmount}</span>
+            <span>- {formatPrice(discountAmount, currency)}</span>
           </div>
         )}
 
         <div className="summary-row total">
           <span>Total</span>
-          <span>₹{total}</span>
+          <span>{formatPrice(total, currency)}</span>
         </div>
 
         <button 
+          type="button"
           className="primary-pill-btn"
           onClick={handleCheckout}
         >

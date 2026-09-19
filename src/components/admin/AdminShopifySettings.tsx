@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { testShopifyConnection } from '../../services/shopify';
-import { Sparkles, CheckCircle2, AlertCircle, RefreshCw, Globe, Key, ShieldCheck, ExternalLink } from 'lucide-react';
+import { CheckCircle2, AlertCircle, RefreshCw, Globe, Key, ShieldCheck } from 'lucide-react';
 
 export const AdminShopifySettings: React.FC = () => {
   const { shopifyConfig, updateShopifyConfig, syncShopifyProducts } = useStore();

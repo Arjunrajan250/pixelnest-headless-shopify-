@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { Search, X, Star, ShoppingBag } from 'lucide-react';
+import { formatPrice } from '../../utils/currency';
 
 export const SearchModal: React.FC = () => {
-  const { isSearchOpen, setIsSearchOpen, products, setSelectedProduct, setActiveTab, addToCart } = useStore();
+  const { isSearchOpen, setIsSearchOpen, products, setSelectedProduct, setActiveTab, addToCart, currency } = useStore();
   const [query, setQuery] = useState('');
 
   if (!isSearchOpen) return null;
@@ -24,7 +25,7 @@ export const SearchModal: React.FC = () => {
             <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#8C857D' }} />
             <input 
               type="text" 
-              placeholder="Search planners, templates, ebooks..." 
+              placeholder="Search mice, keyboards, chargers, desk gear..." 
               value={query}
               onChange={e => setQuery(e.target.value)}
               autoFocus
@@ -32,7 +33,7 @@ export const SearchModal: React.FC = () => {
               style={{ paddingLeft: '38px', borderRadius: 'var(--radius-full)' }}
             />
           </div>
-          <button className="icon-btn-pill" onClick={() => setIsSearchOpen(false)}>
+          <button type="button" className="icon-btn-pill" onClick={() => setIsSearchOpen(false)}>
             <X size={18} />
           </button>
         </div>
@@ -43,8 +44,9 @@ export const SearchModal: React.FC = () => {
               POPULAR SEARCHES
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {['Daily Planner', 'Canva Templates', 'Wellness', 'Budget', 'Lightroom'].map(tag => (
+              {['Ergonomic Mouse', 'Mechanical Keyboard', 'GaN Charger', 'Lava Lamp', 'Monitor Arm', 'Light Bar', 'Magnetic Hooks'].map(tag => (
                 <button
+                  type="button"
                   key={tag}
                   className="filter-pill"
                   onClick={() => setQuery(tag)}
@@ -87,10 +89,11 @@ export const SearchModal: React.FC = () => {
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '13px', fontWeight: 600 }}>{prod.title}</div>
                   <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
-                    {prod.category} • ₹{prod.price}
+                    {prod.category} • {formatPrice(prod.price, currency)}
                   </div>
                 </div>
                 <button 
+                  type="button"
                   className="icon-btn-pill"
                   style={{ width: '32px', height: '32px' }}
                   onClick={(e) => {
@@ -110,3 +113,4 @@ export const SearchModal: React.FC = () => {
     </div>
   );
 };
+

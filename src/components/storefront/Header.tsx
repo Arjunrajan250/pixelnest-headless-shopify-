@@ -1,9 +1,10 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
-import { Search, ShoppingBag, Sparkles, Sliders } from 'lucide-react';
+import { Search, ShoppingBag, Sparkles, User } from 'lucide-react';
+import { CurrencySelector } from './CurrencySelector';
 
 export const Header: React.FC = () => {
-  const { cart, activeTab, setActiveTab, setIsCartOpen, setIsSearchOpen, setAppMode } = useStore();
+  const { cart, activeTab, setActiveTab, setIsCartOpen, setIsSearchOpen, customer, setIsAuthModalOpen } = useStore();
   const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -17,7 +18,7 @@ export const Header: React.FC = () => {
           <Sparkles size={18} style={{ color: '#4A5B4F' }} />
           PixelNest
         </span>
-        <span className="store-logo-subtitle">Premium Hardware & Lifestyle Tech</span>
+        <span className="store-logo-subtitle">Smart Products for Everyday Life</span>
       </div>
 
       <nav className="desktop-header-nav">
@@ -31,7 +32,7 @@ export const Header: React.FC = () => {
           className={`desktop-nav-link ${activeTab === 'planners' ? 'active' : ''}`}
           onClick={() => setActiveTab('planners')}
         >
-          Hardware Gear
+          Shop All
         </button>
         <button 
           className={`desktop-nav-link ${activeTab === 'categories' ? 'active' : ''}`}
@@ -47,19 +48,41 @@ export const Header: React.FC = () => {
         </button>
         <button 
           className={`desktop-nav-link ${activeTab === 'profile' ? 'active' : ''}`}
-          onClick={() => setActiveTab('profile')}
+          onClick={() => {
+            if (!customer) {
+              setIsAuthModalOpen(true);
+            } else {
+              setActiveTab('profile');
+            }
+          }}
         >
-          Profile
+          {customer ? `Hi, ${customer.firstName}` : 'Account'}
         </button>
       </nav>
 
-      <div className="header-action-group">
+      <div className="header-action-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <CurrencySelector compact />
+
         <button 
           className="icon-btn-pill" 
           title="Search products"
           onClick={() => setIsSearchOpen(true)}
         >
-          <Search size={18} />
+          <Search size={17} />
+        </button>
+
+        <button 
+          className="icon-btn-pill" 
+          title={customer ? `Account: ${customer.firstName}` : 'Sign In / Account'}
+          onClick={() => {
+            if (!customer) {
+              setIsAuthModalOpen(true);
+            } else {
+              setActiveTab('profile');
+            }
+          }}
+        >
+          <User size={17} />
         </button>
 
         <button 
@@ -71,20 +94,13 @@ export const Header: React.FC = () => {
             }
           }}
         >
-          <ShoppingBag size={18} />
+          <ShoppingBag size={17} />
           {totalCartCount > 0 && (
             <span className="cart-badge-count">{totalCartCount}</span>
           )}
-        </button>
-
-        <button 
-          className="icon-btn-pill" 
-          title="Merchant Admin Panel"
-          onClick={() => setAppMode('admin')}
-        >
-          <Sliders size={17} />
         </button>
       </div>
     </header>
   );
 };
+

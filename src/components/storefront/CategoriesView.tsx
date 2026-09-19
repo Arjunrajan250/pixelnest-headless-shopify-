@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
 import { CATEGORIES_META } from '../../data/initialData';
-import { ArrowLeft, Search, ChevronRight, DownloadCloud } from 'lucide-react';
+import { ArrowLeft, Search, ChevronRight, ShieldCheck } from 'lucide-react';
 import { ProductCategory } from '../../types';
 
 export const CategoriesView: React.FC<{
@@ -60,13 +60,13 @@ export const CategoriesView: React.FC<{
         ))}
       </div>
 
-      <div className="instant-download-banner" style={{ marginTop: '20px' }}>
-        <div className="instant-download-icon">
-          <DownloadCloud size={18} />
+      <div className="instant-download-banner" style={{ marginTop: '24px', display: 'flex', alignItems: 'center', gap: '14px', background: 'var(--bg-surface-soft)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-sm)', padding: '16px' }}>
+        <div className="instant-download-icon" style={{ background: '#EBF0EC', color: 'var(--color-primary)', width: '38px', height: '38px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <ShieldCheck size={18} />
         </div>
         <div>
-          <div className="instant-download-title">Instant Download</div>
-          <div className="instant-download-desc">Get your product right after purchase.</div>
+          <div className="instant-download-title" style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-main)' }}>Tracked Global Delivery</div>
+          <div className="instant-download-desc" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>All categories ship with protective packaging and verified tracking numbers.</div>
         </div>
       </div>
     </div>
